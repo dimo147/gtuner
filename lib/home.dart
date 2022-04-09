@@ -76,7 +76,6 @@ class _HomeScreenState extends State<HomeScreen> {
           note = handledPitchResult.note;
           position = handledPitchResult.diffFrequency;
           perfect = handledPitchResult.expectedFrequency;
-          print(perfect);
           status = handledPitchResult.tuningStatus.name.toString();
           frequency = handledPitchResult.frequency;
         });
