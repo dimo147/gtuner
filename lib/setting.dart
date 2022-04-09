@@ -29,9 +29,7 @@ class _SettingScreenState extends State<SettingScreen> {
               child: const Text('Done'),
               onPressed: () {
                 Navigator.of(context).pop();
-                calibration = _currentValue.toDouble();
-                widget.refresh();
-                setState(() {});
+                setCalib();
               },
             ),
           ],
@@ -40,9 +38,27 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
+  setCalib() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('calibration', _currentValue);
+    calibration = _currentValue.toDouble();
+    widget.refresh();
+    setState(() {});
+  }
+
+  setShowPitch() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('showPitch', showPitch);
+  }
+
+  setDarkMode() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('darkMode', darkMode);
+  }
+
   getInstrumentType() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? type = prefs.getString('InstrumentType');
+    String type = prefs.getString('InstrumentType') ?? "Guitar";
     setState(() {
       if (type == "Guitar") {
         value = 1;
@@ -111,7 +127,18 @@ class _SettingScreenState extends State<SettingScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 15),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(6, 8, 0, 20),
+              child: Row(
+                children: const [
+                  Text(
+                    "Instruments",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -120,23 +147,76 @@ class _SettingScreenState extends State<SettingScreen> {
                 CustomRadioButton("Bass", 3, "images/bass.png")
               ],
             ),
-            const SizedBox(height: 20),
-            // SizedBox(
-            // child: ListTile(
-            // title: const Text('Calibrate'),
-            // onTap: () {},
-            // ),
-            // ),
+            const SizedBox(height: 25),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(6, 8, 0, 10),
+              child: Row(
+                children: const [
+                  Text(
+                    "Notes",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
             ListTile(
               title: const Text("Calibration"),
               onTap: () {
                 _showMyDialog();
               },
               trailing: Opacity(
-                child: Text(_currentValue.toString()),
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 5),
+                  child: Text(_currentValue.toString() + " Hz"),
+                ),
                 opacity: 0.6,
               ),
-            )
+            ),
+            SwitchListTile(
+              value: showPitch,
+              title: const Text("Show pitch"),
+              onChanged: (value) {
+                setState(() {
+                  showPitch = value;
+                  setShowPitch();
+                  widget.refresh();
+                });
+              },
+            ),
+            const SizedBox(height: 15),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(6, 8, 0, 10),
+              child: Row(
+                children: const [
+                  Text(
+                    "General",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
+            SwitchListTile(
+              value: darkMode,
+              title: const Text("Dark Mode"),
+              onChanged: (value) {
+                setState(() {
+                  darkMode = value;
+                  setDarkMode();
+                  widget.refresh();
+                });
+              },
+            ),
+            ListTile(
+              title: const Text("Language"),
+              onTap: () {},
+              trailing: const Opacity(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 5),
+                  child: Text("English"),
+                ),
+                opacity: 0.6,
+              ),
+            ),
           ],
         ),
       ),
@@ -150,6 +230,7 @@ class _SettingScreenState extends State<SettingScreen> {
           value = index;
         });
         setInstrumentType(text);
+        widget.refresh();
       },
       style: OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

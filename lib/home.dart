@@ -4,7 +4,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/instrument_type.dart';
 import 'package:pitchupdart/pitch_handler.dart';
-import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter/material.dart';
 import 'package:gtuner/setting.dart';
 import 'dart:typed_data';
@@ -36,6 +35,10 @@ const Map<String, double> bass = {
 
 double calibration = 440.0;
 
+bool showPitch = false;
+
+bool darkMode = true;
+
 Map<String, double> tuninig = guitar;
 
 class HomeScreen extends StatefulWidget {
@@ -59,11 +62,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    getData();
     pitchupDart = PitchHandler(
       InstrumentType.guitar,
       calibration,
     );
-    getInstrumentType();
     checkPermission();
   }
 
@@ -109,16 +112,24 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  getInstrumentType() async {
+  getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String instrumentType = prefs.getString('InstrumentType') ?? "Guitar";
-    if (instrumentType == "Guitar") {
-      tuninig = guitar;
-    } else if (instrumentType == "Bass") {
-      tuninig = bass;
-    } else if (instrumentType == "Ukulele") {
-      tuninig = ukulele;
-    }
+    int calib = prefs.getInt("calibration") ?? 440;
+    bool sp = prefs.getBool("setShowPitch") ?? false;
+    bool dm = prefs.getBool("darkMode") ?? true;
+    setState(() {
+      if (instrumentType == "Guitar") {
+        tuninig = guitar;
+      } else if (instrumentType == "Bass") {
+        tuninig = bass;
+      } else if (instrumentType == "Ukulele") {
+        tuninig = ukulele;
+      }
+      calibration = calib.toDouble();
+      showPitch = sp;
+      darkMode = dm;
+    });
   }
 
   @override
@@ -288,7 +299,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             const Spacer(),
-            Text(perfect.toString()),
+            showPitch ? Text(perfect.toString()) : Container(),
+            showPitch ? const Spacer() : Container(),
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: 100,
