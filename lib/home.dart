@@ -12,15 +12,6 @@ import 'dart:math';
 
 double calibration = 440.0;
 
-Map<String, double> tuninig = {
-  "E2": 82.4068892282175,
-  "A": 110.0,
-  "D": 146.8323839587038,
-  "G": 195.99771799087463,
-  "B": 246.94165062806206,
-  "E4": 329.6275569128699,
-};
-
 const Map<String, double> guitar = {
   "E2": 82.4068892282175,
   "A": 110.0,
@@ -38,11 +29,13 @@ const Map<String, double> ukulele = {
 };
 
 const Map<String, double> bass = {
-  "E": 41.204,
-  "A": 55,
-  "D": 73.416,
-  "G": 97.999,
+  "E": 48.999429497718666,
+  "A": 55.0,
+  "D": 73.41619197935188,
+  "G": 97.99885899543733,
 };
+
+Map<String, double> tuninig = guitar;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
