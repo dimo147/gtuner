@@ -42,14 +42,12 @@ class PitchHandler {
       final expectedFrequency = _frequencyFromNoteNumber(_midiFromPitch(pitch));
       final diff = _diffFromTargetedNote(pitch);
       final tuningStatus = _getTuningStatus(diff);
-      final diffCents =
-          _diffInCents(expectedFrequency, expectedFrequency - diff);
 
       return PitchResult(
-          noteLiteral, tuningStatus, expectedFrequency, diff, diffCents, pitch);
+          noteLiteral, tuningStatus, expectedFrequency, diff, pitch);
     }
 
-    return PitchResult("", TuningStatus.undefined, 0.00, 0.00, 0.00, 0.00);
+    return PitchResult("", TuningStatus.undefined, 0.00, 0.00, 0.00);
   }
 
   bool _isPitchInRange(double pitch) {
@@ -65,10 +63,6 @@ class PitchHandler {
   double _diffFromTargetedNote(double pitch) {
     final targetPitch = _frequencyFromNoteNumber(_midiFromPitch(pitch));
     return targetPitch - pitch;
-  }
-
-  double _diffInCents(double expectedFrequency, double frequency) {
-    return 1200.0 * log(expectedFrequency / frequency);
   }
 
   TuningStatus _getTuningStatus(double diff) {

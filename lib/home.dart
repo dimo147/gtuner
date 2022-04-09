@@ -90,7 +90,6 @@ class _HomeScreenState extends State<HomeScreen> {
           perfect = handledPitchResult.expectedFrequency;
           status = handledPitchResult.tuningStatus.name.toString();
           frequency = handledPitchResult.frequency;
-          print(pitchupDart.tuningPitch);
         });
       }
     }
