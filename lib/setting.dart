@@ -2,16 +2,28 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter/material.dart';
 import 'package:gtuner/home.dart';
+import 'package:gtuner/main.dart';
 
 class SettingScreen extends StatefulWidget {
-  SettingScreen({Key? key, required this.refresh}) : super(key: key);
+  SettingScreen({Key? key, required this.refresh, required this.refreshMain})
+      : super(key: key);
   VoidCallback refresh;
+  VoidCallback refreshMain;
 
   @override
   State<SettingScreen> createState() => _SettingScreenState();
 }
 
 int _currentValue = 440;
+
+List<Color> darkBackground = [
+  Color(0xFF2C2C2C),
+  Color(0xFF080808),
+];
+List<Color> lightBackground = [
+  Color(0xFFFFFFFF),
+  Color(0xFFFCFCFC),
+];
 
 class _SettingScreenState extends State<SettingScreen> {
   int value = 1;
@@ -54,6 +66,10 @@ class _SettingScreenState extends State<SettingScreen> {
   setDarkMode() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('darkMode', darkMode);
+    setState(() {
+      darkTheme = darkMode;
+      widget.refreshMain();
+    });
   }
 
   getInstrumentType() async {
@@ -93,12 +109,9 @@ class _SettingScreenState extends State<SettingScreen> {
     return Scaffold(
       body: Container(
         margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xFF2C2C2C),
-              Color(0xFF080808),
-            ],
+            colors: darkTheme ? darkBackground : lightBackground,
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

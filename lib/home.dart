@@ -1,4 +1,5 @@
 import 'package:flutter_audio_capture/flutter_audio_capture.dart';
+import 'package:gtuner/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
@@ -42,7 +43,8 @@ bool darkMode = true;
 Map<String, double> tuninig = guitar;
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key, required this.refresh}) : super(key: key);
+  VoidCallback refresh;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -129,6 +131,8 @@ class _HomeScreenState extends State<HomeScreen> {
       calibration = calib.toDouble();
       showPitch = sp;
       darkMode = dm;
+      darkTheme = dm;
+      widget.refresh();
     });
   }
 
@@ -153,12 +157,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Container(
         margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xFF2C2C2C),
-              Color(0xFF080808),
-            ],
+            colors: darkMode ? darkBackground : lightBackground,
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -171,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'Tuner',
+                    'gTuner',
                     style: TextStyle(fontSize: 24),
                   ),
                   IconButton(
@@ -179,7 +180,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => SettingScreen(refresh: refresh),
+                          builder: (context) => SettingScreen(
+                            refresh: refresh,
+                            refreshMain: widget.refresh,
+                          ),
                         ),
                       );
                     },
@@ -258,7 +262,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Center(
                       child: Text(
                         note.characters.first,
-                        style: const TextStyle(fontSize: 50),
+                        style:
+                            const TextStyle(fontSize: 50, color: Colors.white),
                       ),
                     ),
                   ),
@@ -277,14 +282,24 @@ class _HomeScreenState extends State<HomeScreen> {
                       gradient: RadialGradient(
                         colors: (note.characters.first == i.characters.first &&
                                 perfect == tuninig[i])
-                            ? [
-                                const Color(0xFF851BFF),
-                                const Color(0xFF851BFF),
-                              ]
-                            : [
-                                const Color(0xFF2C2C2C),
-                                const Color(0xFF3A3A3A),
-                              ],
+                            ? darkMode
+                                ? [
+                                    const Color(0xFF851BFF),
+                                    const Color(0xFF851BFF),
+                                  ]
+                                : [
+                                    Color.fromARGB(255, 178, 111, 255),
+                                    Color.fromARGB(255, 165, 86, 255),
+                                  ]
+                            : darkMode
+                                ? [
+                                    const Color(0xFF2C2C2C),
+                                    const Color(0xFF3A3A3A),
+                                  ]
+                                : [
+                                    const Color(0xFFFCFCFC),
+                                    const Color(0xFFEEEEEE),
+                                  ],
                       ),
                     ),
                     width: screenSize.width / 7,
