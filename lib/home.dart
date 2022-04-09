@@ -4,13 +4,12 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/instrument_type.dart';
 import 'package:pitchupdart/pitch_handler.dart';
+import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter/material.dart';
 import 'package:gtuner/setting.dart';
 import 'dart:typed_data';
 import 'dart:async';
 import 'dart:math';
-
-double calibration = 440.0;
 
 const Map<String, double> guitar = {
   "E2": 82.4068892282175,
@@ -35,6 +34,8 @@ const Map<String, double> bass = {
   "G": 97.99885899543733,
 };
 
+double calibration = 440.0;
+
 Map<String, double> tuninig = guitar;
 
 class HomeScreen extends StatefulWidget {
@@ -52,8 +53,19 @@ class _HomeScreenState extends State<HomeScreen> {
   var rng = Random();
   final _audioRecorder = FlutterAudioCapture();
   final pitchDetectorDart = PitchDetector(44100, 2000);
-  final pitchupDart = PitchHandler(InstrumentType.guitar);
+  late PitchHandler pitchupDart;
   String status = '';
+
+  @override
+  void initState() {
+    super.initState();
+    pitchupDart = PitchHandler(
+      InstrumentType.guitar,
+      calibration,
+    );
+    getInstrumentType();
+    checkPermission();
+  }
 
   Future<void> _startCapture() async {
     await _audioRecorder.start(listener, onError,
@@ -78,19 +90,13 @@ class _HomeScreenState extends State<HomeScreen> {
           perfect = handledPitchResult.expectedFrequency;
           status = handledPitchResult.tuningStatus.name.toString();
           frequency = handledPitchResult.frequency;
+          print(pitchupDart.tuningPitch);
         });
       }
     }
   }
 
   void onError(Object e) {}
-
-  @override
-  void initState() {
-    super.initState();
-    getInstrumentType();
-    checkPermission();
-  }
 
   checkPermission() async {
     if (await Permission.microphone.isGranted) {
@@ -123,7 +129,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   refresh() {
-    setState(() {});
+    setState(() {
+      pitchupDart = PitchHandler(
+        InstrumentType.guitar,
+        calibration,
+      );
+    });
   }
 
   @override

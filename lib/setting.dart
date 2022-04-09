@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter/material.dart';
 import 'package:gtuner/home.dart';
 
@@ -10,8 +11,34 @@ class SettingScreen extends StatefulWidget {
   State<SettingScreen> createState() => _SettingScreenState();
 }
 
+int _currentValue = 440;
+
 class _SettingScreenState extends State<SettingScreen> {
   int value = 1;
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Tuning Calibration'),
+          content: _IntegerExample(),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Done'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                calibration = _currentValue.toDouble();
+                widget.refresh();
+                setState(() {});
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   getInstrumentType() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -100,6 +127,16 @@ class _SettingScreenState extends State<SettingScreen> {
             // onTap: () {},
             // ),
             // ),
+            ListTile(
+              title: const Text("Calibration"),
+              onTap: () {
+                _showMyDialog();
+              },
+              trailing: Opacity(
+                child: Text(_currentValue.toString()),
+                opacity: 0.6,
+              ),
+            )
           ],
         ),
       ),
@@ -140,6 +177,28 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _IntegerExample extends StatefulWidget {
+  @override
+  __IntegerExampleState createState() => __IntegerExampleState();
+}
+
+class __IntegerExampleState extends State<_IntegerExample> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        NumberPicker(
+          value: _currentValue,
+          minValue: 280,
+          maxValue: 600,
+          onChanged: (value) => setState(() => _currentValue = value),
+        ),
+      ],
     );
   }
 }

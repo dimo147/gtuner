@@ -8,11 +8,12 @@ import 'package:pitchupdart/tuning_status.dart';
 
 class PitchHandler {
   final InstrumentType _instrumentType;
+  final double tuningPitch;
   dynamic _minimumPitch;
   dynamic _maximumPitch;
   dynamic _noteStrings;
 
-  PitchHandler(this._instrumentType) {
+  PitchHandler(this._instrumentType, this.tuningPitch) {
     switch (_instrumentType) {
       case InstrumentType.guitar:
         _minimumPitch = 40;
@@ -56,7 +57,7 @@ class PitchHandler {
   }
 
   String _noteFromPitch(double frequency) {
-    final noteNum = 12.0 * (log((frequency / 440.0)) / log(2.0));
+    final noteNum = 12.0 * (log((frequency / tuningPitch)) / log(2.0));
     return _noteStrings[
         ((noteNum.roundToDouble() + 69.0).toInt() % 12.0).toInt()];
   }
@@ -85,12 +86,12 @@ class PitchHandler {
   }
 
   int _midiFromPitch(double frequency) {
-    final noteNum = 12.0 * (log((frequency / 440.0)) / log(2.0));
+    final noteNum = 12.0 * (log((frequency / tuningPitch)) / log(2.0));
     return (noteNum.roundToDouble() + 69.0).toInt();
   }
 
   double _frequencyFromNoteNumber(int note) {
     final exp = (note - 69.0).toDouble() / 12.0;
-    return (440.0 * pow(2.0, exp)).toDouble();
+    return (tuningPitch * pow(2.0, exp)).toDouble();
   }
 }
