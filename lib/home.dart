@@ -31,9 +31,9 @@ const Map<String, double> guitar = {
 };
 
 const Map<String, double> ukulele = {
-  "G": 392.00,
-  "C": 261.63,
-  "E": 329.63,
+  "G": 391.99543598174927,
+  "C": 261.6255653005986,
+  "E": 329.6275569128699,
   "A": 440.00,
 };
 
@@ -83,8 +83,9 @@ class _HomeScreenState extends State<HomeScreen> {
           note = handledPitchResult.note;
           position = handledPitchResult.diffFrequency;
           perfect = handledPitchResult.expectedFrequency;
+          print(perfect);
           status = handledPitchResult.tuningStatus.name.toString();
-          // frequency = handledPitchResult.frequency;
+          frequency = handledPitchResult.frequency;
         });
       }
     }
@@ -285,6 +286,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             const Spacer(),
+            Text(perfect.toString()),
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: 100,

@@ -45,10 +45,10 @@ class PitchHandler {
           _diffInCents(expectedFrequency, expectedFrequency - diff);
 
       return PitchResult(
-          noteLiteral, tuningStatus, expectedFrequency, diff, diffCents);
+          noteLiteral, tuningStatus, expectedFrequency, diff, diffCents, pitch);
     }
 
-    return PitchResult("", TuningStatus.undefined, 0.00, 0.00, 0.00);
+    return PitchResult("", TuningStatus.undefined, 0.00, 0.00, 0.00, 0.00);
   }
 
   bool _isPitchInRange(double pitch) {
