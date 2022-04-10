@@ -206,12 +206,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  width: screenSize.width / 1.2,
-                  height: screenSize.width / 1.2,
+                  width: screenSize.width / 1.4,
+                  height: screenSize.width / 1.4,
                 ),
                 Positioned(
-                  left: screenSize.width / 9.5,
-                  top: screenSize.width / 9.5,
+                  left: screenSize.width / 12,
+                  top: screenSize.width / 12,
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -231,13 +231,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    width: screenSize.width / 1.6,
-                    height: screenSize.width / 1.6,
+                    width: screenSize.width / 1.8,
+                    height: screenSize.width / 1.8,
                   ),
                 ),
                 Positioned(
-                  left: screenSize.width / 5,
-                  top: screenSize.width / 5,
+                  left: screenSize.width / 6.1,
+                  top: screenSize.width / 6.1,
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -257,13 +257,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    width: screenSize.width / 2.3,
-                    height: screenSize.width / 2.3,
+                    width: screenSize.width / 2.5,
+                    height: screenSize.width / 2.5,
                     child: Center(
                       child: Text(
                         note.characters.first,
                         style:
-                            const TextStyle(fontSize: 50, color: Colors.white),
+                            const TextStyle(fontSize: 45, color: Colors.white),
                       ),
                     ),
                   ),
@@ -271,48 +271,53 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             const Spacer(flex: 2),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                for (var i in tuninig.keys)
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      gradient: RadialGradient(
-                        colors: (note.characters.first == i.characters.first &&
-                                perfect == tuninig[i])
-                            ? darkMode
-                                ? [
-                                    const Color(0xFF851BFF),
-                                    const Color(0xFF851BFF),
-                                  ]
-                                : [
-                                    const Color.fromARGB(255, 178, 111, 255),
-                                    const Color.fromARGB(255, 165, 86, 255),
-                                  ]
-                            : darkMode
-                                ? [
-                                    const Color(0xFF2C2C2C),
-                                    const Color(0xFF3A3A3A),
-                                  ]
-                                : [
-                                    const Color(0xFFFCFCFC),
-                                    const Color(0xFFEEEEEE),
-                                  ],
-                      ),
-                    ),
-                    width: screenSize.width / 7,
-                    height: screenSize.width / 7,
-                    child: Center(
-                      child: Text(
-                        i.characters.first,
-                        style: const TextStyle(fontSize: 18),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
+            screenSize.height > 600
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      for (var i in tuninig.keys)
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            gradient: RadialGradient(
+                              colors: (note.characters.first ==
+                                          i.characters.first &&
+                                      perfect == tuninig[i])
+                                  ? darkMode
+                                      ? [
+                                          const Color(0xFF851BFF),
+                                          const Color(0xFF851BFF),
+                                        ]
+                                      : [
+                                          const Color.fromARGB(
+                                              255, 178, 111, 255),
+                                          const Color.fromARGB(
+                                              255, 165, 86, 255),
+                                        ]
+                                  : darkMode
+                                      ? [
+                                          const Color(0xFF2C2C2C),
+                                          const Color(0xFF3A3A3A),
+                                        ]
+                                      : [
+                                          const Color(0xFFFCFCFC),
+                                          const Color(0xFFEEEEEE),
+                                        ],
+                            ),
+                          ),
+                          width: screenSize.width / 7,
+                          height: screenSize.width / 7,
+                          child: Center(
+                            child: Text(
+                              i.characters.first,
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                          ),
+                        ),
+                    ],
+                  )
+                : Container(),
             const Spacer(),
             showPitch ? Text(perfect.toString()) : Container(),
             showPitch ? const Spacer() : Container(),

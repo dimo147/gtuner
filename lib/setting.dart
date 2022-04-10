@@ -172,7 +172,7 @@ class _SettingScreenState extends State<SettingScreen> {
               child: Row(
                 children: const [
                   Text(
-                    "Notes",
+                    "Tuner",
                     style: TextStyle(fontSize: 20),
                   ),
                 ],
@@ -225,17 +225,17 @@ class _SettingScreenState extends State<SettingScreen> {
                 });
               },
             ),
-            ListTile(
-              title: const Text("Language"),
-              onTap: () {},
-              trailing: const Opacity(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 5),
-                  child: Text("English"),
-                ),
-                opacity: 0.6,
-              ),
-            ),
+            // ListTile(
+            //   title: const Text("Language"),
+            //   onTap: () {},
+            //   trailing: const Opacity(
+            //     child: Padding(
+            //       padding: EdgeInsets.only(right: 5),
+            //       child: Text("English"),
+            //     ),
+            //     opacity: 0.6,
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -243,6 +243,7 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   Widget CustomRadioButton(String text, int index, String image) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return OutlinedButton(
       onPressed: () {
         setState(() {
@@ -266,7 +267,7 @@ class _SettingScreenState extends State<SettingScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Image.asset(
               image,
-              width: MediaQuery.of(context).size.width / 3 - 60,
+              width: screenWidth < 572 ? screenWidth / 3 - 75 : 572 / 3 - 75,
             ),
           ),
           Padding(
