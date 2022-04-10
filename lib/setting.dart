@@ -16,11 +16,11 @@ class SettingScreen extends StatefulWidget {
 
 int _currentValue = 440;
 
-List<Color> darkBackground = [
+List<Color> darkBackground = const [
   Color(0xFF2C2C2C),
   Color(0xFF080808),
 ];
-List<Color> lightBackground = [
+List<Color> lightBackground = const [
   Color(0xFFFFFFFF),
   Color(0xFFFCFCFC),
 ];
@@ -31,14 +31,18 @@ class _SettingScreenState extends State<SettingScreen> {
   Future<void> _showMyDialog() async {
     return showDialog<void>(
       context: context,
-      barrierDismissible: false,
+      barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Tuning Calibration'),
-          content: _IntegerExample(),
+          content: const IntegerPicker(),
           actions: <Widget>[
             TextButton(
               child: const Text('Done'),
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(
+                    darkMode ? Colors.white : Colors.black),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
                 setCalib();
@@ -119,7 +123,7 @@ class _SettingScreenState extends State<SettingScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(5, 10, 0, 0),
+              padding: const EdgeInsets.fromLTRB(8, 10, 0, 0),
               child: Row(
                 children: [
                   IconButton(
@@ -129,13 +133,15 @@ class _SettingScreenState extends State<SettingScreen> {
                     },
                     icon: const Icon(
                       Icons.chevron_left,
-                      size: 30,
+                      size: 32,
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  const Text(
-                    'Settings',
-                    style: TextStyle(fontSize: 22),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(10, 6, 0, 0),
+                    child: Text(
+                      'Settings',
+                      style: TextStyle(fontSize: 22),
+                    ),
                   ),
                 ],
               ),
@@ -248,7 +254,11 @@ class _SettingScreenState extends State<SettingScreen> {
       style: OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         side: BorderSide(
-            color: (value == index) ? const Color(0xFF9B44FF) : Colors.white30),
+            color: (value == index)
+                ? const Color(0xFF9B44FF)
+                : darkMode
+                    ? Colors.white30
+                    : Colors.black26),
       ),
       child: Column(
         children: [
@@ -264,8 +274,11 @@ class _SettingScreenState extends State<SettingScreen> {
             child: Text(
               text,
               style: TextStyle(
-                color:
-                    (value == index) ? const Color(0xFF9B44FF) : Colors.white70,
+                color: (value == index)
+                    ? const Color(0xFF9B44FF)
+                    : darkMode
+                        ? Colors.white70
+                        : Colors.black54,
               ),
             ),
           ),
@@ -275,12 +288,14 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 }
 
-class _IntegerExample extends StatefulWidget {
+class IntegerPicker extends StatefulWidget {
+  const IntegerPicker({Key? key}) : super(key: key);
+
   @override
-  __IntegerExampleState createState() => __IntegerExampleState();
+  _IntegerPickerState createState() => _IntegerPickerState();
 }
 
-class __IntegerExampleState extends State<_IntegerExample> {
+class _IntegerPickerState extends State<IntegerPicker> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -288,6 +303,7 @@ class __IntegerExampleState extends State<_IntegerExample> {
       children: <Widget>[
         NumberPicker(
           value: _currentValue,
+          textStyle: TextStyle(color: darkMode ? Colors.white : Colors.black),
           minValue: 280,
           maxValue: 600,
           onChanged: (value) => setState(() => _currentValue = value),

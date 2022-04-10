@@ -1,5 +1,4 @@
 import 'package:flutter_audio_capture/flutter_audio_capture.dart';
-import 'package:gtuner/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
@@ -7,6 +6,7 @@ import 'package:pitchupdart/instrument_type.dart';
 import 'package:pitchupdart/pitch_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:gtuner/setting.dart';
+import 'package:gtuner/main.dart';
 import 'dart:typed_data';
 import 'dart:async';
 import 'dart:math';
@@ -167,12 +167,12 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(18, 5, 10, 0),
+              padding: const EdgeInsets.fromLTRB(20, 15, 15, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'gTuner',
+                    "gTuner",
                     style: TextStyle(fontSize: 24),
                   ),
                   IconButton(
@@ -288,8 +288,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     const Color(0xFF851BFF),
                                   ]
                                 : [
-                                    Color.fromARGB(255, 178, 111, 255),
-                                    Color.fromARGB(255, 165, 86, 255),
+                                    const Color.fromARGB(255, 178, 111, 255),
+                                    const Color.fromARGB(255, 165, 86, 255),
                                   ]
                             : darkMode
                                 ? [
