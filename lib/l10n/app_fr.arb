@@ -1,9 +1,9 @@
 {
-    "settings": "Settings",
+    "settings": "Réglages",
     "instrument": "Instrument",
-    "tuner": "Tuner",
-    "calibration": "Calibration",
-    "showPitch": "Show Pitch",
-    "general": "General",
-    "darkMode": "Dark Mode"
+    "tuner": "réglages de l'accordeur",
+    "calibration": "noter l'étalonnage",
+    "showPitch": "Fréquence d'affichage",
+    "general": "Général",
+    "darkMode": "Mode sombre"
 }

@@ -1,9 +1,9 @@
 {
     "settings": "Settings",
     "instrument": "Instrument",
-    "tuner": "Tuner",
+    "tuner": "Tuner settings",
     "calibration": "Calibration",
-    "showPitch": "Show Pitch",
-    "general": "General",
+    "showPitch": "Display Pitch",
+    "general": "General Settings",
     "darkMode": "Dark Mode"
 }
