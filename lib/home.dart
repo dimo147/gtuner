@@ -319,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 : Container(),
             const Spacer(),
-            showPitch ? Text(perfect.toString()) : Container(),
+            showPitch ? Text(frequency.toStringAsFixed(2)) : Container(),
             showPitch ? const Spacer() : Container(),
             SizedBox(
               width: MediaQuery.of(context).size.width,
@@ -353,7 +353,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 2.5,
                     height: 100,
                     left:
-                        (MediaQuery.of(context).size.width / 2) + position * 12,
+                        (MediaQuery.of(context).size.width / 2) + position * 9,
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.fastOutSlowIn,
                     child: Container(

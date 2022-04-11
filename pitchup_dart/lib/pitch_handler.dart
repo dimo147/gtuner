@@ -66,13 +66,13 @@ class PitchHandler {
   }
 
   TuningStatus _getTuningStatus(double diff) {
-    if (diff >= -0.3 && diff <= 0.3) {
+    if (diff >= -4 && diff <= 4) {
       return TuningStatus.tuned;
-    } else if (diff >= -1.0 && diff <= 0.0) {
+    } else if (diff >= -8 && diff <= 4) {
       return TuningStatus.toohigh;
-    } else if (diff > 0.0 && diff <= 1.0) {
+    } else if (diff > 4 && diff <= 8) {
       return TuningStatus.toolow;
-    } else if (diff >= double.negativeInfinity && diff <= -1.0) {
+    } else if (diff >= double.negativeInfinity && diff <= -8) {
       return TuningStatus.waytoohigh;
     } else {
       return TuningStatus.waytoolow;

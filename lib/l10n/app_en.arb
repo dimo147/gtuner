@@ -2,7 +2,7 @@
     "settings": "Settings",
     "instrument": "Instrument",
     "tuner": "Tuner settings",
-    "calibration": "note Calibration",
+    "calibration": "note calibration",
     "showPitch": "Display frequency",
     "general": "Overall Settings",
     "darkMode": "Dark Mode"
