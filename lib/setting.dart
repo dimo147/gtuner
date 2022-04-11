@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter/material.dart';
@@ -110,6 +111,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var labels = AppLocalizations.of(context);
     return Scaffold(
       body: Container(
         margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
@@ -123,7 +125,7 @@ class _SettingScreenState extends State<SettingScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(8, 10, 0, 0),
+              padding: const EdgeInsets.fromLTRB(4, 10, 0, 0),
               child: Row(
                 children: [
                   IconButton(
@@ -136,11 +138,11 @@ class _SettingScreenState extends State<SettingScreen> {
                       size: 32,
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(10, 6, 0, 0),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(4, 2, 0, 0),
                     child: Text(
-                      'Settings',
-                      style: TextStyle(fontSize: 22),
+                      labels!.settings,
+                      style: const TextStyle(fontSize: 22),
                     ),
                   ),
                 ],
@@ -148,12 +150,12 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             const SizedBox(height: 15),
             Padding(
-              padding: const EdgeInsets.fromLTRB(6, 8, 0, 20),
+              padding: const EdgeInsets.fromLTRB(8, 8, 0, 20),
               child: Row(
-                children: const [
+                children: [
                   Text(
-                    "Instruments",
-                    style: TextStyle(fontSize: 20),
+                    labels.instrument,
+                    style: const TextStyle(fontSize: 20),
                   ),
                 ],
               ),
@@ -168,18 +170,18 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             const SizedBox(height: 25),
             Padding(
-              padding: const EdgeInsets.fromLTRB(6, 8, 0, 10),
+              padding: const EdgeInsets.fromLTRB(8, 8, 0, 10),
               child: Row(
-                children: const [
+                children: [
                   Text(
-                    "Tuner",
-                    style: TextStyle(fontSize: 20),
+                    labels.tuner,
+                    style: const TextStyle(fontSize: 20),
                   ),
                 ],
               ),
             ),
             ListTile(
-              title: const Text("Calibration"),
+              title: Text(labels.calibration),
               onTap: () {
                 _showMyDialog();
               },
@@ -193,7 +195,7 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             SwitchListTile(
               value: showPitch,
-              title: const Text("Show pitch"),
+              title: Text(labels.showPitch),
               onChanged: (value) {
                 setState(() {
                   showPitch = value;
@@ -204,19 +206,19 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             const SizedBox(height: 15),
             Padding(
-              padding: const EdgeInsets.fromLTRB(6, 8, 0, 10),
+              padding: const EdgeInsets.fromLTRB(8, 8, 0, 10),
               child: Row(
-                children: const [
+                children: [
                   Text(
-                    "General",
-                    style: TextStyle(fontSize: 20),
+                    labels.general,
+                    style: const TextStyle(fontSize: 20),
                   ),
                 ],
               ),
             ),
             SwitchListTile(
               value: darkMode,
-              title: const Text("Dark Mode"),
+              title: Text(labels.darkMode),
               onChanged: (value) {
                 setState(() {
                   darkMode = value;

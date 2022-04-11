@@ -1,6 +1,6 @@
 import 'package:flutter_audio_capture/flutter_audio_capture.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/instrument_type.dart';
 import 'package:pitchupdart/pitch_handler.dart';
@@ -12,26 +12,26 @@ import 'dart:async';
 import 'dart:math';
 
 const Map<String, double> guitar = {
-  "E2": 82.4068892282175,
+  "E2": 82.40,
   "A": 110.0,
-  "D": 146.8323839587038,
-  "G": 195.99771799087463,
-  "B": 246.94165062806206,
-  "E4": 329.6275569128699,
+  "D": 146.83,
+  "G": 195.99,
+  "B": 246.94,
+  "E4": 329.62,
 };
 
 const Map<String, double> ukulele = {
-  "G": 391.99543598174927,
-  "C": 261.6255653005986,
-  "E": 329.6275569128699,
+  "G": 391.99,
+  "C": 261.62,
+  "E": 329.62,
   "A": 440.00,
 };
 
 const Map<String, double> bass = {
-  "E": 48.999429497718666,
+  "E": 48.99,
   "A": 55.0,
-  "D": 73.41619197935188,
-  "G": 97.99885899543733,
+  "D": 73.41,
+  "G": 97.99,
 };
 
 double calibration = 440.0;
@@ -283,7 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             gradient: RadialGradient(
                               colors: (note.characters.first ==
                                           i.characters.first &&
-                                      perfect == tuninig[i])
+                                      perfect.toInt() == tuninig[i]?.toInt())
                                   ? darkMode
                                       ? [
                                           const Color(0xFF851BFF),

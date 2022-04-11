@@ -1,3 +1,9 @@
 {
-    "helloWorld": "¡Hola Mundo!"
+    "settings": "Ajustes",
+    "instrument": "Instrumento",
+    "tuner": "Afinador",
+    "calibration": "Calibración",
+    "showPitch": "Mostrar tono",
+    "general": "General",
+    "darkMode": "Modo oscuro"
 }

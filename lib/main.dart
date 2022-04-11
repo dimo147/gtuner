@@ -43,8 +43,18 @@ class _MyAppState extends State<MyApp> {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale('en', ''),
-        Locale('es', ''),
+        Locale('en', ''), // English
+        Locale('es', ''), // Espanish
+        Locale('fa', ''), // Persian
+        Locale('fr', ''), // French
+        Locale('ar', ''), // Arabic
+        Locale('hi', ''), // Hindi
+        Locale('he', ''), // Hebrew
+        Locale('it', ''), // Italian
+        Locale('ja', ''), // Japanese
+        Locale('ko', ''), // Korean
+        Locale('tr', ''), // Turkish
+        Locale('ru', ''), // Russian
       ],
       debugShowCheckedModeBanner: false,
       title: 'gTuner',
