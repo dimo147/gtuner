@@ -118,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String instrumentType = prefs.getString('InstrumentType') ?? "Guitar";
     int calib = prefs.getInt("calibration") ?? 440;
-    bool sp = prefs.getBool("setShowPitch") ?? false;
+    bool sp = prefs.getBool("showPitch") ?? false;
     bool dm = prefs.getBool("darkMode") ?? true;
     setState(() {
       if (instrumentType == "Guitar") {

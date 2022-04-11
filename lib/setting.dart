@@ -15,8 +15,6 @@ class SettingScreen extends StatefulWidget {
   State<SettingScreen> createState() => _SettingScreenState();
 }
 
-int _currentValue = 440;
-
 List<Color> darkBackground = const [
   Color(0xFF2C2C2C),
   Color(0xFF080808),
@@ -57,8 +55,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   setCalib() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('calibration', _currentValue);
-    calibration = _currentValue.toDouble();
+    await prefs.setInt('calibration', calibration.toInt());
     widget.refresh();
     setState(() {});
   }
@@ -80,6 +77,7 @@ class _SettingScreenState extends State<SettingScreen> {
   getInstrumentType() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String type = prefs.getString('InstrumentType') ?? "Guitar";
+
     setState(() {
       if (type == "Guitar") {
         value = 1;
@@ -188,7 +186,7 @@ class _SettingScreenState extends State<SettingScreen> {
               trailing: Opacity(
                 child: Padding(
                   padding: const EdgeInsets.only(right: 5),
-                  child: Text(_currentValue.toString() + " Hz"),
+                  child: Text(calibration.toString() + " Hz"),
                 ),
                 opacity: 0.6,
               ),
@@ -305,11 +303,11 @@ class _IntegerPickerState extends State<IntegerPicker> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         NumberPicker(
-          value: _currentValue,
+          value: calibration.toInt(),
           textStyle: TextStyle(color: darkMode ? Colors.white : Colors.black),
           minValue: 280,
           maxValue: 600,
-          onChanged: (value) => setState(() => _currentValue = value),
+          onChanged: (value) => setState(() => calibration = value.toDouble()),
         ),
       ],
     );
