@@ -1,9 +1,9 @@
 {
-    "settings": "Settings",
-    "instrument": "Instrument",
-    "tuner": "Tuner settings",
-    "calibration": "note Calibration",
-    "showPitch": "Display frequency",
-    "general": "Overall Settings",
-    "darkMode": "Dark Mode"
+    "settings": "إعدادات",
+    "instrument": "آلة موسيقية",
+    "tuner": "إعدادات الموالف",
+    "calibration": "معايرة نوتة",
+    "showPitch": "تردد العرض",
+    "general": "الإعدادات العامة",
+    "darkMode": "الوضع الداكن"
 }

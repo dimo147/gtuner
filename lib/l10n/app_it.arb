@@ -1,9 +1,9 @@
 {
-    "settings": "Settings",
-    "instrument": "Instrument",
-    "tuner": "Tuner settings",
-    "calibration": "note Calibration",
-    "showPitch": "Display frequency",
-    "general": "Overall Settings",
-    "darkMode": "Dark Mode"
+    "settings": "impostazioni",
+    "instrument": "strumento",
+    "tuner": "impostazioni dell'accordatore",
+    "calibration": "nota calibrazione",
+    "showPitch": "Visualizza frequenza",
+    "general": "Impostazioni generali",
+    "darkMode": "Modalità scura"
 }
