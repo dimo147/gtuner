@@ -186,7 +186,7 @@ class _SettingScreenState extends State<SettingScreen> {
               trailing: Opacity(
                 child: Padding(
                   padding: const EdgeInsets.only(right: 5),
-                  child: Text(calibration.toString() + " Hz"),
+                  child: Text(calibration.toInt().toString() + " Hz"),
                 ),
                 opacity: 0.6,
               ),
