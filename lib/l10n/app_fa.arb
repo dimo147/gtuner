@@ -1,9 +1,9 @@
 {
     "settings": "تنظیمات",
     "instrument": "ساز",
-    "tuner": "کوک",
+    "tuner": "تنظیمات کوک",
     "calibration": "کالیبراسیون فرکانس",
     "showPitch": "نمایش فرکانس",
     "general": "تنظیمات کلی",
-    "darkMode": حاات تاریک"
+    "darkMode": " حاات تاریک"
 }

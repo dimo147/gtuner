@@ -148,7 +148,7 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             const SizedBox(height: 15),
             Padding(
-              padding: const EdgeInsets.fromLTRB(8, 8, 0, 20),
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 20),
               child: Row(
                 children: [
                   Text(
@@ -168,7 +168,7 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             const SizedBox(height: 25),
             Padding(
-              padding: const EdgeInsets.fromLTRB(8, 8, 0, 10),
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 10),
               child: Row(
                 children: [
                   Text(
@@ -204,7 +204,7 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             const SizedBox(height: 15),
             Padding(
-              padding: const EdgeInsets.fromLTRB(8, 8, 0, 10),
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 10),
               child: Row(
                 children: [
                   Text(
