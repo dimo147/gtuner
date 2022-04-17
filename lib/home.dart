@@ -1,9 +1,11 @@
 import 'package:flutter_audio_capture/flutter_audio_capture.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/instrument_type.dart';
 import 'package:pitchupdart/pitch_handler.dart';
+import 'package:gtuner/ad_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:gtuner/setting.dart';
 import 'package:gtuner/main.dart';
@@ -61,6 +63,12 @@ class _HomeScreenState extends State<HomeScreen> {
   late PitchHandler pitchupDart;
   String status = '';
 
+  late BannerAd _bannerAd;
+  bool _isBannerAdReady = false;
+
+  InterstitialAd? _interstitialAd;
+  bool _isInterstitialAdReady = false;
+
   @override
   void initState() {
     super.initState();
@@ -70,6 +78,50 @@ class _HomeScreenState extends State<HomeScreen> {
       calibration,
     );
     checkPermission();
+    _bannerAd = BannerAd(
+      adUnitId: AdHelper.bannerAdUnitId,
+      request: AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          setState(() {
+            _isBannerAdReady = true;
+          });
+        },
+        onAdFailedToLoad: (ad, err) {
+          print('Failed to load a banner ad: ${err.message}');
+          _isBannerAdReady = false;
+          ad.dispose();
+        },
+      ),
+    );
+
+    _bannerAd.load();
+    // _loadInterstitialAd();
+  }
+
+  void _loadInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: AdHelper.interstitialAdUnitId,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          this._interstitialAd = ad;
+
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              Navigator.pop(context);
+            },
+          );
+
+          _isInterstitialAdReady = true;
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load an interstitial ad: ${err.message}');
+          _isInterstitialAdReady = false;
+        },
+      ),
+    );
   }
 
   Future<void> _startCapture() async {
@@ -122,6 +174,10 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<InitializationStatus> _initGoogleMobileAds() {
+    return MobileAds.instance.initialize();
+  }
+
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String instrumentType = prefs.getString('InstrumentType') ?? "Guitar";
@@ -146,6 +202,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
+    _bannerAd.dispose();
+    _interstitialAd?.dispose();
     _stopCapture();
     super.dispose();
   }
@@ -199,6 +257,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
+            ),
+            if (_isBannerAdReady)
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  width: _bannerAd.size.width.toDouble(),
+                  height: _bannerAd.size.height.toDouble(),
+                  child: AdWidget(ad: _bannerAd),
+                ),
+              ),
+            FlatButton(
+              child: Text('ads'.toUpperCase()),
+              onPressed: () {
+                if (_isInterstitialAdReady) {
+                  _interstitialAd?.show();
+                }
+              },
             ),
             const Spacer(),
             Stack(
