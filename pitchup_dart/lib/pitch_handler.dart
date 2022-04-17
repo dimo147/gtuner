@@ -16,7 +16,7 @@ class PitchHandler {
   PitchHandler(this._instrumentType, this.tuningPitch) {
     switch (_instrumentType) {
       case InstrumentType.guitar:
-        _minimumPitch = 40;
+        _minimumPitch = 20.0;
         _maximumPitch = 1050.0;
         _noteStrings = [
           "C",

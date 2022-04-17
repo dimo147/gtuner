@@ -28,7 +28,7 @@ const Map<String, double> ukulele = {
 };
 
 const Map<String, double> bass = {
-  "E": 48.99,
+  "E": 41.203,
   "A": 55.0,
   "D": 73.41,
   "G": 97.99,
@@ -111,6 +111,14 @@ class _HomeScreenState extends State<HomeScreen> {
           _startCapture();
         }
       });
+    }
+  }
+
+  inRange(perfect, tuning) {
+    if (tuning < perfect + 5 && tuning > perfect - 5) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -283,7 +291,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             gradient: RadialGradient(
                               colors: (note.characters.first ==
                                           i.characters.first &&
-                                      perfect.toInt() == tuninig[i]?.toInt())
+                                      inRange(
+                                          perfect.toInt(), tuninig[i]?.toInt()))
                                   ? darkMode
                                       ? [
                                           const Color(0xFF851BFF),
