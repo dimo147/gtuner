@@ -1,4 +1,4 @@
-# gtuner
+# gTuner
 
 A Mobile Guitar tuner.
 
@@ -10,4 +10,10 @@ flutter pub get
 
 ```bash
 flutter run
+```
+
+## Build for android
+
+```bash
+flutter build apk
 ```
