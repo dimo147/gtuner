@@ -62,9 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final pitchDetectorDart = PitchDetector(44100, 2000);
   late PitchHandler pitchupDart;
   String status = '';
-
-  late BannerAd _bannerAd;
-  bool _isBannerAdReady = false;
+  Timer? timer;
 
   InterstitialAd? _interstitialAd;
   bool _isInterstitialAdReady = false;
@@ -78,25 +76,13 @@ class _HomeScreenState extends State<HomeScreen> {
       calibration,
     );
     checkPermission();
-    _bannerAd = BannerAd(
-      adUnitId: AdHelper.bannerAdUnitId,
-      request: const AdRequest(),
-      size: AdSize.banner,
-      listener: BannerAdListener(
-        onAdLoaded: (_) {
-          setState(() {
-            _isBannerAdReady = true;
-          });
-        },
-        onAdFailedToLoad: (ad, err) {
-          _isBannerAdReady = false;
-          ad.dispose();
-        },
-      ),
-    );
     _initGoogleMobileAds();
-    _bannerAd.load();
     _loadInterstitialAd();
+    Future.delayed(const Duration(seconds: 50), () {
+      if (_isInterstitialAdReady) {
+        _interstitialAd?.show();
+      }
+    });
   }
 
   void _loadInterstitialAd() {
@@ -108,7 +94,14 @@ class _HomeScreenState extends State<HomeScreen> {
           _interstitialAd = ad;
 
           ad.fullScreenContentCallback = FullScreenContentCallback(
-            onAdDismissedFullScreenContent: (ad) {},
+            onAdDismissedFullScreenContent: (ad) {
+              _loadInterstitialAd();
+              Future.delayed(const Duration(seconds: 50), () {
+                if (_isInterstitialAdReady) {
+                  _interstitialAd?.show();
+                }
+              });
+            },
           );
 
           _isInterstitialAdReady = true;
@@ -198,9 +191,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    _bannerAd.dispose();
     _interstitialAd?.dispose();
     _stopCapture();
+    timer?.cancel();
     super.dispose();
   }
 
@@ -254,36 +247,40 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            if (_isBannerAdReady)
-              Align(
-                alignment: Alignment.topCenter,
-                child: SizedBox(
-                  width: _bannerAd.size.width.toDouble(),
-                  height: _bannerAd.size.height.toDouble(),
-                  child: AdWidget(ad: _bannerAd),
-                ),
-              ),
-            TextButton(
-              child: Text('ads'.toUpperCase()),
-              onPressed: () {
-                if (_isInterstitialAdReady) {
-                  _interstitialAd?.show();
-                }
-              },
-            ),
+            // TextButton(
+            //   child: Text('ads'.toUpperCase()),
+            //   onPressed: () {
+            //     if (_isInterstitialAdReady) {
+            //       _interstitialAd?.show();
+            //     }
+            //   },
+            // ),
             const Spacer(),
             Stack(
               children: [
                 Container(
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
-                      colors: [
-                        Color(0xFF222222),
-                        Color(0xFF333333),
-                      ],
+                      colors: darkMode
+                          ? const [
+                              Color(0xFF222222),
+                              Color(0xFF333333),
+                            ]
+                          : const [
+                              Color(0xFF595959),
+                              Color(0xFF595959),
+                            ],
                     ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.4),
+                        spreadRadius: 1,
+                        blurRadius: 10,
+                        offset: const Offset(0, 0),
+                      ),
+                    ],
                   ),
                   width: screenSize.width / 1.4,
                   height: screenSize.width / 1.4,
@@ -305,7 +302,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         BoxShadow(
                           color: Colors.black.withOpacity(0.4),
                           spreadRadius: 3,
-                          blurRadius: 5,
+                          blurRadius: 10,
                           offset: const Offset(0, 0),
                         ),
                       ],
@@ -315,34 +312,40 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Positioned(
-                  left: screenSize.width / 6.1,
-                  top: screenSize.width / 6.1,
+                  left: screenSize.width / 5.9,
+                  top: screenSize.width / 5.9,
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,
-                      gradient: const RadialGradient(
-                        colors: [
-                          Color(0xFF2C2C2C),
-                          Color(0xFF3A3A3A),
-                        ],
+                      gradient: RadialGradient(
+                        colors: darkMode
+                            ? const [
+                                Color(0xFF2C2C2C),
+                                Color(0xFF3A3A3A),
+                              ]
+                            : const [
+                                Color(0xFF595959),
+                                Color(0xFF595959),
+                              ],
                       ),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.4),
                           spreadRadius: 4,
-                          blurRadius: 4,
+                          blurRadius: darkMode ? 4 : 8,
                           offset: const Offset(0, 1),
                         ),
                       ],
                     ),
-                    width: screenSize.width / 2.5,
-                    height: screenSize.width / 2.5,
+                    width: screenSize.width / 2.6,
+                    height: screenSize.width / 2.6,
                     child: Center(
                       child: Text(
                         note.characters.first,
-                        style:
-                            const TextStyle(fontSize: 45, color: Colors.white),
+                        style: TextStyle(
+                            fontSize: 45,
+                            color: darkMode ? Colors.white : Colors.grey[300]),
                       ),
                     ),
                   ),
@@ -364,25 +367,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                           i.characters.first &&
                                       inRange(
                                           perfect.toInt(), tuninig[i]?.toInt()))
-                                  ? darkMode
-                                      ? [
-                                          const Color(0xFF851BFF),
-                                          const Color(0xFF851BFF),
-                                        ]
-                                      : [
-                                          const Color.fromARGB(
-                                              255, 178, 111, 255),
-                                          const Color.fromARGB(
-                                              255, 165, 86, 255),
-                                        ]
+                                  ? [
+                                      const Color(0xFF851BFF),
+                                      const Color(0xFF851BFF),
+                                    ]
                                   : darkMode
                                       ? [
                                           const Color(0xFF2C2C2C),
                                           const Color(0xFF3A3A3A),
                                         ]
                                       : [
-                                          const Color(0xFFFCFCFC),
                                           const Color(0xFFEEEEEE),
+                                          const Color(0xFFe0e0e0),
                                         ],
                             ),
                           ),
@@ -391,7 +387,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Center(
                             child: Text(
                               i.characters.first,
-                              style: const TextStyle(fontSize: 18),
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: (note.characters.first ==
+                                            i.characters.first &&
+                                        inRange(perfect.toInt(),
+                                            tuninig[i]?.toInt()))
+                                    ? darkMode
+                                        ? Colors.white
+                                        : Colors.white
+                                    : darkMode
+                                        ? Colors.white
+                                        : Colors.black,
+                              ),
                             ),
                           ),
                         ),
@@ -399,7 +407,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 : Container(),
             const Spacer(),
-            showPitch ? Text(frequency.toStringAsFixed(2)) : Container(),
+            showPitch
+                ? Text(
+                    frequency.toStringAsFixed(2),
+                    style: const TextStyle(fontSize: 16),
+                  )
+                : Container(),
             showPitch ? const Spacer() : Container(),
             SizedBox(
               width: MediaQuery.of(context).size.width,

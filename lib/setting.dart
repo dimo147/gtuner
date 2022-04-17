@@ -1,9 +1,20 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter/material.dart';
+import 'package:gtuner/ad_helper.dart';
 import 'package:gtuner/home.dart';
 import 'package:gtuner/main.dart';
+
+List<Color> darkBackground = const [
+  Color(0xFF2C2C2C),
+  Color(0xFF080808),
+];
+List<Color> lightBackground = const [
+  Color(0xFFFFFFFF),
+  Color(0xFFe8e8e8),
+];
 
 class SettingScreen extends StatefulWidget {
   SettingScreen({Key? key, required this.refresh, required this.refreshMain})
@@ -15,17 +26,10 @@ class SettingScreen extends StatefulWidget {
   State<SettingScreen> createState() => _SettingScreenState();
 }
 
-List<Color> darkBackground = const [
-  Color(0xFF2C2C2C),
-  Color(0xFF080808),
-];
-List<Color> lightBackground = const [
-  Color(0xFFFFFFFF),
-  Color(0xFFFCFCFC),
-];
-
 class _SettingScreenState extends State<SettingScreen> {
   int value = 1;
+  late BannerAd _bannerAd;
+  bool _isBannerAdReady = false;
 
   Future<void> _showMyDialog() async {
     return showDialog<void>(
@@ -105,6 +109,30 @@ class _SettingScreenState extends State<SettingScreen> {
   void initState() {
     super.initState();
     getInstrumentType();
+    _bannerAd = BannerAd(
+      adUnitId: AdHelper.bannerAdUnitId,
+      request: const AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          setState(() {
+            _isBannerAdReady = true;
+          });
+        },
+        onAdFailedToLoad: (ad, err) {
+          _isBannerAdReady = false;
+          ad.dispose();
+        },
+      ),
+    );
+
+    _bannerAd.load();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd.dispose();
+    super.dispose();
   }
 
   @override
@@ -236,6 +264,16 @@ class _SettingScreenState extends State<SettingScreen> {
             //     opacity: 0.6,
             //   ),
             // ),
+            const Spacer(),
+            if (_isBannerAdReady)
+              Align(
+                alignment: Alignment.topCenter,
+                child: SizedBox(
+                  width: _bannerAd.size.width.toDouble(),
+                  height: _bannerAd.size.height.toDouble(),
+                  child: AdWidget(ad: _bannerAd),
+                ),
+              ),
           ],
         ),
       ),
