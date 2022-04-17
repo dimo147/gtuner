@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
     checkPermission();
     _bannerAd = BannerAd(
       adUnitId: AdHelper.bannerAdUnitId,
-      request: AdRequest(),
+      request: const AdRequest(),
       size: AdSize.banner,
       listener: BannerAdListener(
         onAdLoaded: (_) {
@@ -89,35 +89,31 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
         onAdFailedToLoad: (ad, err) {
-          print('Failed to load a banner ad: ${err.message}');
           _isBannerAdReady = false;
           ad.dispose();
         },
       ),
     );
-
+    _initGoogleMobileAds();
     _bannerAd.load();
-    // _loadInterstitialAd();
+    _loadInterstitialAd();
   }
 
   void _loadInterstitialAd() {
     InterstitialAd.load(
       adUnitId: AdHelper.interstitialAdUnitId,
-      request: AdRequest(),
+      request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
-          this._interstitialAd = ad;
+          _interstitialAd = ad;
 
           ad.fullScreenContentCallback = FullScreenContentCallback(
-            onAdDismissedFullScreenContent: (ad) {
-              Navigator.pop(context);
-            },
+            onAdDismissedFullScreenContent: (ad) {},
           );
 
           _isInterstitialAdReady = true;
         },
         onAdFailedToLoad: (err) {
-          print('Failed to load an interstitial ad: ${err.message}');
           _isInterstitialAdReady = false;
         },
       ),
@@ -261,13 +257,13 @@ class _HomeScreenState extends State<HomeScreen> {
             if (_isBannerAdReady)
               Align(
                 alignment: Alignment.topCenter,
-                child: Container(
+                child: SizedBox(
                   width: _bannerAd.size.width.toDouble(),
                   height: _bannerAd.size.height.toDouble(),
                   child: AdWidget(ad: _bannerAd),
                 ),
               ),
-            FlatButton(
+            TextButton(
               child: Text('ads'.toUpperCase()),
               onPressed: () {
                 if (_isInterstitialAdReady) {
