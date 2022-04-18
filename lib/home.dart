@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ad.fullScreenContentCallback = FullScreenContentCallback(
             onAdDismissedFullScreenContent: (ad) {
               _loadInterstitialAd();
-              Future.delayed(const Duration(seconds: 50), () {
+              Future.delayed(const Duration(seconds: 110), () {
                 if (_isInterstitialAdReady) {
                   _interstitialAd?.show();
                 }
