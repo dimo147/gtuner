@@ -97,7 +97,7 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 30),
             Center(
               child: Text(
                 notes.toString() + ' / ' + noteType.toString(),
@@ -161,6 +161,44 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
                     color: Colors.white.withOpacity(0.7),
                   ),
                 ],
+              ),
+            ),
+            const Spacer(),
+            GestureDetector(
+              onHorizontalDragUpdate: (details) {
+                if (details.delta.dx > 0) {
+                  setState(() {
+                    if (tempo < 130) {
+                      tempo += 1;
+                    }
+                  });
+                } else if (details.delta.dx < 0) {
+                  setState(() {
+                    if (tempo > 35) {
+                      tempo -= 1;
+                    }
+                  });
+                }
+              },
+              child: Container(
+                width: 230,
+                height: 230,
+                decoration: BoxDecoration(
+                  gradient: const RadialGradient(colors: [
+                    Color.fromARGB(255, 223, 223, 223),
+                    Colors.grey,
+                  ]),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.8),
+                      spreadRadius: 5,
+                      blurRadius: 40,
+                      offset: const Offset(-5, 5),
+                    ),
+                  ],
+                  color: Colors.grey,
+                  shape: BoxShape.circle,
+                ),
               ),
             ),
             const Spacer(),
