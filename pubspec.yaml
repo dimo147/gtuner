@@ -23,6 +23,7 @@ dependencies:
   permission_handler: ^8.3.0
   adaptive_theme: ^2.3.0
   flutter_fft: ^1.0.2+6
+  audioplayers: ^0.20.1
   numberpicker: ^2.1.1
   intl: ^0.17.0
 

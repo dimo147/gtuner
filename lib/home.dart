@@ -7,6 +7,7 @@ import 'package:pitchupdart/instrument_type.dart';
 import 'package:pitchupdart/pitch_handler.dart';
 import 'package:gtuner/ad_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:gtuner/metronome.dart';
 import 'package:gtuner/setting.dart';
 import 'package:gtuner/main.dart';
 import 'dart:typed_data';
@@ -222,10 +223,22 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 15, 15, 0),
+              padding: const EdgeInsets.fromLTRB(10, 12, 10, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MetronomeScreen(),
+                        ),
+                      );
+                    },
+                    icon: Image.asset("images/metronome.png",
+                        width: 100, height: 100, color: Colors.white),
+                  ),
                   const Text(
                     "gTuner",
                     style: TextStyle(fontSize: 24),
@@ -247,14 +260,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            // TextButton(
-            //   child: Text('ads'.toUpperCase()),
-            //   onPressed: () {
-            //     if (_isInterstitialAdReady) {
-            //       _interstitialAd?.show();
-            //     }
-            //   },
-            // ),
             const Spacer(),
             Stack(
               children: [
@@ -352,7 +357,61 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            const Spacer(flex: 2),
+            const Spacer(),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: 100,
+              child: Stack(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      for (var i = 0;
+                          i <= MediaQuery.of(context).size.width / 8.5;
+                          i++)
+                        Container(
+                          color: Colors.grey.withOpacity(0.5),
+                          width: 2,
+                          height: 40 + rng.nextInt(93 - 40).toDouble(),
+                        ),
+                    ],
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width / 2 - 1),
+                    color: Colors.green.withOpacity(0.6),
+                    width: 2,
+                    height: 100,
+                  ),
+                  AnimatedPositioned(
+                    width: 2.5,
+                    height: 100,
+                    left:
+                        (MediaQuery.of(context).size.width / 2) + position * 9,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.fastOutSlowIn,
+                    child: Container(
+                      color: status == "waytoohigh" || status == "waytoolow"
+                          ? Colors.red
+                          : status == "toolow" || status == "toohigh"
+                              ? Colors.yellow
+                              : status == "tuned"
+                                  ? Colors.green
+                                  : Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Spacer(),
+            showPitch
+                ? Text(
+                    frequency.toStringAsFixed(2),
+                    style: const TextStyle(fontSize: 16),
+                  )
+                : Container(),
+            showPitch ? const Spacer() : Container(),
             screenSize.height > 600
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -407,61 +466,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 : Container(),
             const Spacer(),
-            showPitch
-                ? Text(
-                    frequency.toStringAsFixed(2),
-                    style: const TextStyle(fontSize: 16),
-                  )
-                : Container(),
-            showPitch ? const Spacer() : Container(),
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 100,
-              child: Stack(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      for (var i = 0;
-                          i <= MediaQuery.of(context).size.width / 8;
-                          i++)
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Container(
-                            color: Colors.grey.withOpacity(0.5),
-                            width: 2,
-                            height: 50 + rng.nextInt(93 - 50).toDouble(),
-                          ),
-                        ),
-                    ],
-                  ),
-                  Center(
-                    child: Container(
-                      color: Colors.green.withOpacity(0.6),
-                      width: 2,
-                      height: 100,
-                    ),
-                  ),
-                  AnimatedPositioned(
-                    width: 2.5,
-                    height: 100,
-                    left:
-                        (MediaQuery.of(context).size.width / 2) + position * 9,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.fastOutSlowIn,
-                    child: Container(
-                      color: status == "waytoohigh" || status == "waytoolow"
-                          ? Colors.red
-                          : status == "toolow" || status == "toohigh"
-                              ? Colors.yellow
-                              : status == "tuned"
-                                  ? Colors.green
-                                  : Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ],
         ),
       ),
