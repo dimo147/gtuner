@@ -1,4 +1,4 @@
-package com.dimo.gtuner.gtuner
+package com.dimo.gtuner
 
 import io.flutter.embedding.android.FlutterActivity
 
