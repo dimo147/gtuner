@@ -1,8 +1,12 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter/material.dart';
 import 'package:gtuner/setting.dart';
 import 'package:gtuner/home.dart';
 import 'dart:async';
+
+int notes = 4;
+int noteType = 4;
 
 class MetronomeScreen extends StatefulWidget {
   const MetronomeScreen({Key? key}) : super(key: key);
@@ -13,8 +17,6 @@ class MetronomeScreen extends StatefulWidget {
 
 class _MetronomeScreenState extends State<MetronomeScreen> {
   int tempo = 75;
-  int notes = 4;
-  int noteType = 4;
   int current = 1;
   Timer? timer;
   bool isPlaying = false;
@@ -61,6 +63,32 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
     super.dispose();
   }
 
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Tuning Calibration'),
+          content: const RythmPicker(),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Done'),
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(
+                    darkMode ? Colors.white : Colors.black),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() {});
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,10 +126,15 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
               ),
             ),
             const SizedBox(height: 30),
-            Center(
-              child: Text(
-                notes.toString() + ' / ' + noteType.toString(),
-                style: const TextStyle(fontSize: 30),
+            GestureDetector(
+              onTap: () {
+                _showMyDialog();
+              },
+              child: Center(
+                child: Text(
+                  notes.toString() + ' / ' + noteType.toString(),
+                  style: const TextStyle(fontSize: 30),
+                ),
               ),
             ),
             const SizedBox(height: 40),
@@ -165,14 +198,14 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
             ),
             const Spacer(),
             GestureDetector(
-              onHorizontalDragUpdate: (details) {
-                if (details.delta.dx > 0) {
+              onVerticalDragUpdate: (details) {
+                if (details.delta.dy < 0) {
                   setState(() {
                     if (tempo < 130) {
                       tempo += 1;
                     }
                   });
-                } else if (details.delta.dx < 0) {
+                } else if (details.delta.dy > 0) {
                   setState(() {
                     if (tempo > 35) {
                       tempo -= 1;
@@ -222,6 +255,33 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class RythmPicker extends StatefulWidget {
+  const RythmPicker({Key? key}) : super(key: key);
+
+  @override
+  _RythmPickerState createState() => _RythmPickerState();
+}
+
+class _RythmPickerState extends State<RythmPicker> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        NumberPicker(
+          value: notes,
+          textStyle: const TextStyle(color: Colors.white, fontSize: 20),
+          selectedTextStyle: const TextStyle(
+              color: Color.fromARGB(255, 255, 92, 146), fontSize: 30),
+          minValue: 2,
+          maxValue: 12,
+          onChanged: (value) => setState(() => notes = value),
+        ),
+      ],
     );
   }
 }
