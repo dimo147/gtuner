@@ -63,7 +63,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final pitchDetectorDart = PitchDetector(44100, 2000);
   late PitchHandler pitchupDart;
   String status = '';
-  Timer? timer;
 
   InterstitialAd? _interstitialAd;
   bool _isInterstitialAdReady = false;
@@ -194,7 +193,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void dispose() {
     _interstitialAd?.dispose();
     _stopCapture();
-    timer?.cancel();
     super.dispose();
   }
 
@@ -368,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       for (var i = 0;
-                          i <= MediaQuery.of(context).size.width / 8.5;
+                          i <= MediaQuery.of(context).size.width / 10;
                           i++)
                         Container(
                           color: Colors.grey.withOpacity(0.5),

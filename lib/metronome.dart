@@ -214,12 +214,12 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
                 }
               },
               child: Container(
-                width: 230,
-                height: 230,
+                width: 210,
+                height: 210,
                 decoration: BoxDecoration(
                   gradient: const RadialGradient(colors: [
-                    Color.fromARGB(255, 223, 223, 223),
-                    Colors.grey,
+                    Color.fromARGB(255, 194, 194, 194),
+                    Color.fromARGB(255, 117, 117, 117),
                   ]),
                   boxShadow: [
                     BoxShadow(
