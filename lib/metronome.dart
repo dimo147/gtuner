@@ -24,6 +24,14 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
     prefix: "images/",
     fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP),
   );
+  static AudioCache player2 = AudioCache(
+    prefix: "images/",
+    fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP),
+  );
+  static AudioCache player3 = AudioCache(
+    prefix: "images/",
+    fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP),
+  );
 
   @override
   void initState() {
@@ -38,8 +46,13 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
   }
 
   playSound() async {
-    String audioasset = "metronome.wav";
-    await player.play(audioasset, mode: PlayerMode.LOW_LATENCY);
+    if (notes % 2 == 1 && current == 1) {
+      await player3.play("metronome.wav", mode: PlayerMode.LOW_LATENCY);
+    } else if (current % 2 == 0) {
+      await player.play("metronome.wav", mode: PlayerMode.LOW_LATENCY);
+    } else {
+      await player2.play("metronome.wav", mode: PlayerMode.LOW_LATENCY);
+    }
     setState(() {
       if (current == notes) {
         current = 1;
@@ -184,7 +197,7 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
                     onPressed: () {
                       stop();
                       setState(() {
-                        if (tempo < 130) {
+                        if (tempo < 180) {
                           tempo += 1;
                         }
                       });
@@ -201,7 +214,7 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
               onVerticalDragUpdate: (details) {
                 if (details.delta.dy < 0) {
                   setState(() {
-                    if (tempo < 130) {
+                    if (tempo < 180) {
                       tempo += 1;
                     }
                   });
@@ -214,8 +227,8 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
                 }
               },
               child: Container(
-                width: 210,
-                height: 210,
+                width: 200,
+                height: 200,
                 decoration: BoxDecoration(
                   gradient: const RadialGradient(colors: [
                     Color.fromARGB(255, 194, 194, 194),
