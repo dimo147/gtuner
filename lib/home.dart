@@ -285,12 +285,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  width: screenSize.width / 1.4,
-                  height: screenSize.width / 1.4,
+                  width: screenSize.width / 1.6,
+                  height: screenSize.width / 1.6,
                 ),
                 Positioned(
-                  left: screenSize.width / 12,
-                  top: screenSize.width / 12,
+                  left: screenSize.width / 15,
+                  top: screenSize.width / 15,
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -310,13 +310,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    width: screenSize.width / 1.8,
-                    height: screenSize.width / 1.8,
+                    width: screenSize.width / 2,
+                    height: screenSize.width / 2,
                   ),
                 ),
                 Positioned(
-                  left: screenSize.width / 5.9,
-                  top: screenSize.width / 5.9,
+                  left: screenSize.width / 7.2,
+                  top: screenSize.width / 7.2,
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -341,8 +341,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    width: screenSize.width / 2.6,
-                    height: screenSize.width / 2.6,
+                    width: screenSize.width / 2.8,
+                    height: screenSize.width / 2.8,
                     child: Center(
                       child: Text(
                         note.characters.first,

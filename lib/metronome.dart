@@ -264,7 +264,7 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
                 )
               ],
             ),
-            const SizedBox(height: 30),
+            const Spacer(),
           ],
         ),
       ),
