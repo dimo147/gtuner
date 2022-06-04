@@ -1,5 +1,3 @@
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:gtuner/home.dart';
 
@@ -13,12 +11,14 @@ ThemeData _darkTheme = ThemeData(
   accentColor: Colors.purpleAccent,
   brightness: Brightness.dark,
   primaryColor: Colors.purpleAccent,
+  useMaterial3: true,
 );
 
 ThemeData _lightTheme = ThemeData(
   accentColor: Colors.purpleAccent,
   brightness: Brightness.light,
   primaryColor: Colors.purpleAccent,
+  useMaterial3: true,
 );
 
 class MyApp extends StatefulWidget {
@@ -36,28 +36,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('af', ''), // Afrikaans
-        Locale('ar', ''), // Arabic
-        Locale('en', ''), // English
-        Locale('es', ''), // Espanish
-        Locale('fa', ''), // Persian
-        Locale('fr', ''), // French
-        Locale('he', ''), // Hebrew
-        Locale('hi', ''), // Hindi
-        Locale('it', ''), // Italian
-        Locale('ja', ''), // Japanese
-        Locale('ko', ''), // Korean
-        Locale('ru', ''), // Russian
-        Locale('tr', ''), // Turkish
-        Locale('zh', ''), // Chinese
-      ],
       debugShowCheckedModeBanner: false,
       title: 'gTuner',
       theme: darkTheme ? _darkTheme : _lightTheme,

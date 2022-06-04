@@ -13,15 +13,11 @@ dependencies:
 
   pitchupdart: 
     path: ./pitchup_dart
-  flutter_localizations:
-    sdk: flutter
-  flutter_launcher_icons: ^0.9.2
   flutter_audio_capture: ^1.1.0
   pitch_detector_dart: ^0.0.2
   shared_preferences: ^2.0.11
   google_mobile_ads: ^0.13.0
   permission_handler: ^8.3.0
-  adaptive_theme: ^2.3.0
   flutter_fft: ^1.0.2+6
   audioplayers: ^0.20.1
   numberpicker: ^2.1.1

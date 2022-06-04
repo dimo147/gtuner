@@ -1,4 +1,3 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -137,7 +136,6 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var labels = AppLocalizations.of(context);
     return Scaffold(
       body: Container(
         margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
@@ -164,11 +162,11 @@ class _SettingScreenState extends State<SettingScreen> {
                       size: 32,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(4, 2, 0, 0),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(4, 2, 0, 0),
                     child: Text(
-                      labels!.settings,
-                      style: const TextStyle(fontSize: 22),
+                      "Settings",
+                      style: TextStyle(fontSize: 22),
                     ),
                   ),
                 ],
@@ -178,10 +176,10 @@ class _SettingScreenState extends State<SettingScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 20),
               child: Row(
-                children: [
+                children: const [
                   Text(
-                    labels.instrument,
-                    style: const TextStyle(fontSize: 20),
+                    "Instrument",
+                    style: TextStyle(fontSize: 20),
                   ),
                 ],
               ),
@@ -198,16 +196,16 @@ class _SettingScreenState extends State<SettingScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 10),
               child: Row(
-                children: [
+                children: const [
                   Text(
-                    labels.tuner,
-                    style: const TextStyle(fontSize: 20),
+                    "Tuner",
+                    style: TextStyle(fontSize: 20),
                   ),
                 ],
               ),
             ),
             ListTile(
-              title: Text(labels.calibration),
+              title: const Text("Calibration"),
               onTap: () {
                 _showMyDialog();
               },
@@ -221,7 +219,7 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             SwitchListTile(
               value: showPitch,
-              title: Text(labels.showPitch),
+              title: const Text("Frequency"),
               onChanged: (value) {
                 setState(() {
                   showPitch = value;
@@ -231,20 +229,9 @@ class _SettingScreenState extends State<SettingScreen> {
               },
             ),
             const SizedBox(height: 15),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 8, 8, 10),
-              child: Row(
-                children: [
-                  Text(
-                    labels.general,
-                    style: const TextStyle(fontSize: 20),
-                  ),
-                ],
-              ),
-            ),
             SwitchListTile(
               value: darkMode,
-              title: Text(labels.darkMode),
+              title: const Text("Dark Mode"),
               onChanged: (value) {
                 setState(() {
                   darkMode = value;
