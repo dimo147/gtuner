@@ -125,13 +125,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
-  flutter_fft:
-    dependency: "direct main"
-    description:
-      name: flutter_fft
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.2+6"
   flutter_lints:
     dependency: "direct dev"
     description:

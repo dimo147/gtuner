@@ -241,26 +241,11 @@ class _SettingScreenState extends State<SettingScreen> {
               },
             ),
             // ListTile(
-            //   title: const Text("Language"),
-            //   onTap: () {},
-            //   trailing: const Opacity(
-            //     child: Padding(
-            //       padding: EdgeInsets.only(right: 5),
-            //       child: Text("English"),
-            //     ),
-            //     opacity: 0.6,
-            //   ),
-            // ),
-            // ListTile(
             //   title: const Text("Rate us"),
             //   onTap: () {},
             // ),
             // ListTile(
             //   title: const Text("Terms of Service"),
-            //   onTap: () {},
-            // ),
-            // ListTile(
-            //   title: const Text("Remove Ads"),
             //   onTap: () {},
             // ),
             const Spacer(),
