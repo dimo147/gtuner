@@ -2,38 +2,32 @@ library pitchupdart;
 
 import 'dart:math';
 
-import 'package:pitchupdart/instrument_type.dart';
 import 'package:pitchupdart/pitch_result.dart';
 import 'package:pitchupdart/tuning_status.dart';
 
 class PitchHandler {
-  final InstrumentType _instrumentType;
   final double tuningPitch;
   dynamic _minimumPitch;
   dynamic _maximumPitch;
   dynamic _noteStrings;
 
-  PitchHandler(this._instrumentType, this.tuningPitch) {
-    switch (_instrumentType) {
-      case InstrumentType.guitar:
-        _minimumPitch = 20.0;
-        _maximumPitch = 1050.0;
-        _noteStrings = [
-          "C",
-          "C#",
-          "D",
-          "D#",
-          "E",
-          "F",
-          "F#",
-          "G",
-          "G#",
-          "A",
-          "A#",
-          "B"
-        ];
-        break;
-    }
+  PitchHandler(this.tuningPitch) {
+    _minimumPitch = 20.0;
+    _maximumPitch = 1050.0;
+    _noteStrings = [
+      "C",
+      "C#",
+      "D",
+      "D#",
+      "E",
+      "F",
+      "F#",
+      "G",
+      "G#",
+      "A",
+      "A#",
+      "B"
+    ];
   }
 
   PitchResult handlePitch(double pitch) {

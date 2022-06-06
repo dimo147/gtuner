@@ -3,7 +3,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
-import 'package:pitchupdart/instrument_type.dart';
 import 'package:pitchupdart/pitch_handler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gtuner/ad_helper.dart';
@@ -42,7 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     getData();
     pitchupDart = PitchHandler(
-      InstrumentType.guitar,
       calibration,
     );
     checkPermission();
@@ -168,7 +166,6 @@ class _HomeScreenState extends State<HomeScreen> {
   refresh() {
     setState(() {
       pitchupDart = PitchHandler(
-        InstrumentType.guitar,
         calibration,
       );
     });
