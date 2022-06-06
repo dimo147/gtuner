@@ -282,6 +282,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const Spacer(),
+            showPitch
+                ? Text(
+                    frequency.toStringAsFixed(2),
+                    style: const TextStyle(fontSize: 18),
+                  )
+                : Container(),
+            showPitch ? const Spacer() : Container(),
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: 100,
@@ -331,13 +338,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const Spacer(),
-            showPitch
-                ? Text(
-                    frequency.toStringAsFixed(2),
-                    style: const TextStyle(fontSize: 16),
-                  )
-                : Container(),
-            showPitch ? const Spacer() : Container(),
             screenSize.height > 600
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
