@@ -3,17 +3,8 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter/material.dart';
 import 'package:gtuner/ad_helper.dart';
-import 'package:gtuner/home.dart';
+import 'package:gtuner/consts.dart';
 import 'package:gtuner/main.dart';
-
-List<Color> darkBackground = const [
-  Color(0xFF2C2C2C),
-  Color(0xFF080808),
-];
-List<Color> lightBackground = const [
-  Color(0xFFFFFFFF),
-  Color(0xFFe8e8e8),
-];
 
 class SettingScreen extends StatefulWidget {
   SettingScreen({Key? key, required this.refresh, required this.refreshMain})

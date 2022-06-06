@@ -5,45 +5,16 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/instrument_type.dart';
 import 'package:pitchupdart/pitch_handler.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:gtuner/ad_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:gtuner/metronome.dart';
 import 'package:gtuner/setting.dart';
+import 'package:gtuner/consts.dart';
 import 'package:gtuner/main.dart';
 import 'dart:typed_data';
 import 'dart:async';
 import 'dart:math';
-
-const Map<String, double> guitar = {
-  "E2": 82.40,
-  "A": 110.0,
-  "D": 146.83,
-  "G": 195.99,
-  "B": 246.94,
-  "E4": 329.62,
-};
-
-const Map<String, double> ukulele = {
-  "G": 391.99,
-  "C": 261.62,
-  "E": 329.62,
-  "A": 440.00,
-};
-
-const Map<String, double> bass = {
-  "E": 41.203,
-  "A": 55.0,
-  "D": 73.41,
-  "G": 97.99,
-};
-
-double calibration = 440.0;
-
-bool showPitch = false;
-
-bool darkMode = true;
-
-Map<String, double> tuninig = guitar;
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key, required this.refresh}) : super(key: key);
@@ -237,9 +208,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: Image.asset("images/metronome.png",
                         width: 100, height: 100, color: Colors.white),
                   ),
-                  const Text(
+                  Text(
                     "gTuner",
-                    style: TextStyle(fontSize: 24),
+                    style: GoogleFonts.inter(
+                        fontSize: 25, fontWeight: FontWeight.w500),
                   ),
                   IconButton(
                     onPressed: () {
@@ -259,101 +231,42 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const Spacer(),
-            Stack(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: darkMode
-                          ? const [
-                              Color(0xFF222222),
-                              Color(0xFF333333),
-                            ]
-                          : const [
-                              Color(0xFF595959),
-                              Color(0xFF595959),
-                            ],
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.4),
-                        spreadRadius: 1,
-                        blurRadius: 10,
-                        offset: const Offset(0, 0),
-                      ),
-                    ],
-                  ),
-                  width: screenSize.width / 1.6,
-                  height: screenSize.width / 1.6,
-                ),
-                Positioned(
-                  left: screenSize.width / 15,
-                  top: screenSize.width / 15,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      gradient: const RadialGradient(
-                        colors: [
-                          Color(0xFF222222),
-                          Color(0xFF851BFF),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  colors: darkMode
+                      ? const [
+                          Color(0xFF404040),
+                          Color(0xFF272727),
+                        ]
+                      : const [
+                          Color(0xFF595959),
+                          Color(0xFF595959),
                         ],
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.4),
-                          spreadRadius: 3,
-                          blurRadius: 10,
-                          offset: const Offset(0, 0),
-                        ),
-                      ],
-                    ),
-                    width: screenSize.width / 2,
-                    height: screenSize.width / 2,
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.4),
+                    spreadRadius: 6,
+                    blurRadius: 35,
+                    offset: const Offset(12, 18),
+                  ),
+                ],
+              ),
+              width: screenSize.width * 0.55,
+              height: screenSize.width * 0.55,
+              child: Center(
+                child: Text(
+                  note,
+                  style: const TextStyle(
+                    fontSize: 65,
                   ),
                 ),
-                Positioned(
-                  left: screenSize.width / 7.2,
-                  top: screenSize.width / 7.2,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      gradient: RadialGradient(
-                        colors: darkMode
-                            ? const [
-                                Color(0xFF2C2C2C),
-                                Color(0xFF3A3A3A),
-                              ]
-                            : const [
-                                Color(0xFF595959),
-                                Color(0xFF595959),
-                              ],
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.4),
-                          spreadRadius: 4,
-                          blurRadius: darkMode ? 4 : 8,
-                          offset: const Offset(0, 1),
-                        ),
-                      ],
-                    ),
-                    width: screenSize.width / 2.8,
-                    height: screenSize.width / 2.8,
-                    child: Center(
-                      child: Text(
-                        note.characters.first,
-                        style: TextStyle(
-                            fontSize: 45,
-                            color: darkMode ? Colors.white : Colors.grey[300]),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
             const Spacer(),
             SizedBox(
@@ -371,7 +284,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Container(
                           color: Colors.grey.withOpacity(0.5),
                           width: 2,
-                          height: 40 + rng.nextInt(93 - 40).toDouble(),
+                          height: 25 + rng.nextInt(93 - 25).toDouble(),
                         ),
                     ],
                   ),
@@ -419,7 +332,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             shape: BoxShape.circle,
-                            gradient: RadialGradient(
+                            gradient: LinearGradient(
                               colors: (note.characters.first ==
                                           i.characters.first &&
                                       inRange(
@@ -437,24 +350,34 @@ class _HomeScreenState extends State<HomeScreen> {
                                           const Color(0xFFEEEEEE),
                                           const Color(0xFFe0e0e0),
                                         ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
                             ),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0xFF000000),
+                                spreadRadius: 6,
+                                blurRadius: 35,
+                                offset: Offset(12, 18),
+                              ),
+                            ],
                           ),
                           width: screenSize.width / 7,
                           height: screenSize.width / 7,
                           child: Center(
                             child: Text(
                               i.characters.first,
-                              style: TextStyle(
-                                fontSize: 18,
+                              style: GoogleFonts.inter(
+                                fontSize: 19,
                                 color: (note.characters.first ==
                                             i.characters.first &&
                                         inRange(perfect.toInt(),
                                             tuninig[i]?.toInt()))
                                     ? darkMode
-                                        ? Colors.white
-                                        : Colors.white
+                                        ? const Color(0xfff3f3f3)
+                                        : const Color(0xfff3f3f3)
                                     : darkMode
-                                        ? Colors.white
+                                        ? const Color(0xfff3f3f3)
                                         : Colors.black,
                               ),
                             ),
@@ -463,6 +386,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   )
                 : Container(),
+            const SizedBox(height: 25),
             const Spacer(),
           ],
         ),

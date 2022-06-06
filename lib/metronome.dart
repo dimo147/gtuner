@@ -1,12 +1,8 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter/material.dart';
-import 'package:gtuner/setting.dart';
-import 'package:gtuner/home.dart';
+import 'package:gtuner/consts.dart';
 import 'dart:async';
-
-int notes = 4;
-int noteType = 4;
 
 class MetronomeScreen extends StatefulWidget {
   const MetronomeScreen({Key? key}) : super(key: key);
