@@ -141,7 +141,7 @@ class _SettingScreenState extends State<SettingScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(3, 15, 12, 15),
+              padding: const EdgeInsets.fromLTRB(8, 15, 12, 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

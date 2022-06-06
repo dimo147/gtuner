@@ -88,7 +88,7 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(3, 15, 12, 35),
+              padding: const EdgeInsets.fromLTRB(12, 15, 12, 35),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -108,7 +108,7 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
                       style: GoogleFonts.inter(fontSize: 26),
                     ),
                   ),
-                  const SizedBox(width: 55),
+                  const SizedBox(width: 40),
                 ],
               ),
             ),
@@ -140,14 +140,23 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.8),
-                          spreadRadius: 3,
-                          blurRadius: 17,
-                          offset: const Offset(2, 5),
-                        ),
-                      ],
+                      boxShadow: darkMode
+                          ? [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.8),
+                                spreadRadius: 3,
+                                blurRadius: 17,
+                                offset: const Offset(2, 5),
+                              ),
+                            ]
+                          : [
+                              const BoxShadow(
+                                color: Color(0xffADADAD),
+                                spreadRadius: 4,
+                                blurRadius: 12,
+                                offset: Offset(3, 5),
+                              ),
+                            ],
                     ),
                     width: (current == i) ? 32 : 27,
                     height: (current == i) ? 32 : 27,
@@ -172,7 +181,9 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
                     },
                     icon: const Icon(Icons.remove),
                     iconSize: 60,
-                    color: Colors.white.withOpacity(0.88),
+                    color: darkMode
+                        ? Colors.white.withOpacity(0.88)
+                        : Colors.black.withOpacity(0.78),
                   ),
                   Text(
                     tempo.toString(),
@@ -189,7 +200,9 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
                     },
                     icon: const Icon(Icons.add),
                     iconSize: 60,
-                    color: Colors.white.withOpacity(0.88),
+                    color: darkMode
+                        ? Colors.white.withOpacity(0.88)
+                        : Colors.black.withOpacity(0.78),
                   ),
                 ],
               ),
@@ -215,22 +228,36 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
                 width: 200,
                 height: 200,
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xff000000),
-                      Color(0x00D9D9D9),
-                    ],
+                  gradient: LinearGradient(
+                    colors: darkMode
+                        ? [
+                            const Color(0xff000000),
+                            const Color(0x00D9D9D9),
+                          ]
+                        : [
+                            const Color(0xffffffff),
+                            const Color(0xffB2B2B2),
+                          ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.8),
-                      spreadRadius: 8,
-                      blurRadius: 25,
-                      offset: const Offset(10, 12),
-                    ),
-                  ],
+                  boxShadow: darkMode
+                      ? [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.8),
+                            spreadRadius: 8,
+                            blurRadius: 25,
+                            offset: const Offset(10, 12),
+                          ),
+                        ]
+                      : [
+                          const BoxShadow(
+                            color: Color(0xffA6A6A6),
+                            spreadRadius: 8,
+                            blurRadius: 33,
+                            offset: Offset(10, 12),
+                          ),
+                        ],
                   color: Colors.grey,
                   shape: BoxShape.circle,
                 ),

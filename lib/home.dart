@@ -26,7 +26,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   double frequency = 0.0;
-  String note = "E";
+  String note = "F";
   double perfect = 0.0;
   double position = 0.0;
   var rng = Random();
@@ -49,11 +49,11 @@ class _HomeScreenState extends State<HomeScreen> {
     checkPermission();
     _initGoogleMobileAds();
     _loadInterstitialAd();
-    Future.delayed(const Duration(seconds: 50), () {
-      if (_isInterstitialAdReady) {
-        _interstitialAd?.show();
-      }
-    });
+    // Future.delayed(const Duration(seconds: 50), () {
+    //   if (_isInterstitialAdReady) {
+    //     _interstitialAd?.show();
+    //   }
+    // });
   }
 
   void _loadInterstitialAd() {
@@ -205,8 +205,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       );
                     },
-                    icon: Image.asset("images/metronome.png",
-                        width: 100, height: 100, color: Colors.white),
+                    icon: Image.asset(
+                      "images/metronome.png",
+                      width: 100,
+                      height: 100,
+                      color: darkMode ? Colors.white : Colors.black,
+                    ),
                   ),
                   Text(
                     "gTuner",
@@ -242,20 +246,29 @@ class _HomeScreenState extends State<HomeScreen> {
                           Color(0xFF272727),
                         ]
                       : const [
-                          Color(0xFF595959),
-                          Color(0xFF595959),
+                          Color(0xFFFDFDFD),
+                          Color(0xFFC7C7C7),
                         ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.4),
-                    spreadRadius: 6,
-                    blurRadius: 35,
-                    offset: const Offset(12, 18),
-                  ),
-                ],
+                boxShadow: darkMode
+                    ? [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.4),
+                          spreadRadius: 6,
+                          blurRadius: 35,
+                          offset: const Offset(12, 18),
+                        ),
+                      ]
+                    : const [
+                        BoxShadow(
+                          color: Color(0xffADADAD),
+                          spreadRadius: 5,
+                          blurRadius: 40,
+                          offset: Offset(12, 15),
+                        ),
+                      ],
               ),
               width: screenSize.width * 0.55,
               height: screenSize.width * 0.55,
@@ -282,7 +295,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           i <= MediaQuery.of(context).size.width / 10;
                           i++)
                         Container(
-                          color: Colors.grey.withOpacity(0.5),
+                          color: darkMode
+                              ? Colors.grey.withOpacity(0.5)
+                              : Colors.black.withOpacity(0.55),
                           width: 2,
                           height: 25 + rng.nextInt(93 - 25).toDouble(),
                         ),
@@ -353,14 +368,23 @@ class _HomeScreenState extends State<HomeScreen> {
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                             ),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Color(0xFF000000),
-                                spreadRadius: 3,
-                                blurRadius: 15,
-                                offset: Offset(5, 5),
-                              ),
-                            ],
+                            boxShadow: darkMode
+                                ? const [
+                                    BoxShadow(
+                                      color: Color(0xFF000000),
+                                      spreadRadius: 3,
+                                      blurRadius: 15,
+                                      offset: Offset(5, 5),
+                                    ),
+                                  ]
+                                : const [
+                                    BoxShadow(
+                                      color: Color(0xffADADAD),
+                                      spreadRadius: 1,
+                                      blurRadius: 12,
+                                      offset: Offset(2, 3),
+                                    ),
+                                  ],
                           ),
                           width: screenSize.width / 7,
                           height: screenSize.width / 7,
@@ -373,9 +397,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             i.characters.first &&
                                         inRange(perfect.toInt(),
                                             tuninig[i]?.toInt()))
-                                    ? darkMode
-                                        ? const Color(0xfff3f3f3)
-                                        : const Color(0xfff3f3f3)
+                                    ? const Color(0xfff3f3f3)
                                     : darkMode
                                         ? const Color(0xfff3f3f3)
                                         : Colors.black,
