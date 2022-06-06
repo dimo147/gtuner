@@ -49,11 +49,11 @@ class _HomeScreenState extends State<HomeScreen> {
     checkPermission();
     _initGoogleMobileAds();
     _loadInterstitialAd();
-    // Future.delayed(const Duration(seconds: 50), () {
-    //   if (_isInterstitialAdReady) {
-    //     _interstitialAd?.show();
-    //   }
-    // });
+    Future.delayed(const Duration(seconds: 50), () {
+      if (_isInterstitialAdReady) {
+        _interstitialAd?.show();
+      }
+    });
   }
 
   void _loadInterstitialAd() {
@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ad.fullScreenContentCallback = FullScreenContentCallback(
             onAdDismissedFullScreenContent: (ad) {
               _loadInterstitialAd();
-              Future.delayed(const Duration(seconds: 110), () {
+              Future.delayed(const Duration(seconds: 150), () {
                 if (_isInterstitialAdReady) {
                   _interstitialAd?.show();
                 }

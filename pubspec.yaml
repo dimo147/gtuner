@@ -2,7 +2,7 @@ name: gtuner
 description: Mobile guitar Tuner.
 
 publish_to: 'none'
-version: 1.5.0
+version: 1.6.0
 
 environment:
   sdk: ">=2.15.1 <3.0.0"
