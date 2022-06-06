@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:gtuner/metronome.dart';
 import 'package:gtuner/setting.dart';
 import 'package:gtuner/consts.dart';
-import 'package:gtuner/main.dart';
 import 'dart:typed_data';
 import 'dart:async';
 import 'dart:math';
@@ -155,7 +154,6 @@ class _HomeScreenState extends State<HomeScreen> {
       calibration = calib.toDouble();
       showPitch = sp;
       darkMode = dm;
-      darkTheme = dm;
       widget.refresh();
     });
   }

@@ -1,26 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gtuner/consts.dart';
 import 'package:gtuner/home.dart';
 
 void main() {
   Paint.enableDithering = true;
   runApp(const MyApp());
 }
-
-bool darkTheme = true;
-
-ThemeData _darkTheme = ThemeData(
-  accentColor: Colors.purpleAccent,
-  brightness: Brightness.dark,
-  primaryColor: Colors.purpleAccent,
-  useMaterial3: true,
-);
-
-ThemeData _lightTheme = ThemeData(
-  accentColor: Colors.purpleAccent,
-  brightness: Brightness.light,
-  primaryColor: Colors.purpleAccent,
-  useMaterial3: true,
-);
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -39,7 +24,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'gTuner',
-      theme: darkTheme ? _darkTheme : _lightTheme,
+      theme: darkMode ? darkTheme : lightTheme,
       home: HomeScreen(
         refresh: refreshMain,
       ),

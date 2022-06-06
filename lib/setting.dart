@@ -64,7 +64,6 @@ class _SettingScreenState extends State<SettingScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('darkMode', darkMode);
     setState(() {
-      darkTheme = darkMode;
       widget.refreshMain();
     });
   }
@@ -133,7 +132,7 @@ class _SettingScreenState extends State<SettingScreen> {
         margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: darkTheme ? darkBackground : lightBackground,
+            colors: darkMode ? darkBackground : lightBackground,
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -141,7 +140,7 @@ class _SettingScreenState extends State<SettingScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(8, 15, 12, 15),
+              padding: const EdgeInsets.fromLTRB(6, 15, 12, 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -151,17 +150,17 @@ class _SettingScreenState extends State<SettingScreen> {
                     },
                     icon: const Icon(
                       Icons.chevron_left,
-                      size: 38,
+                      size: 35,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 7),
+                    padding: const EdgeInsets.only(top: 4),
                     child: Text(
                       "Settings",
-                      style: GoogleFonts.inter(fontSize: 26),
+                      style: GoogleFonts.inter(fontSize: 24),
                     ),
                   ),
-                  const SizedBox(width: 55),
+                  const SizedBox(width: 45),
                 ],
               ),
             ),

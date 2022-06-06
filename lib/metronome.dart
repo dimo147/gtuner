@@ -88,7 +88,7 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(12, 15, 12, 35),
+              padding: const EdgeInsets.fromLTRB(6, 15, 12, 35),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -98,14 +98,14 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
                     },
                     icon: const Icon(
                       Icons.chevron_left,
-                      size: 38,
+                      size: 35,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 7),
+                    padding: const EdgeInsets.only(top: 4),
                     child: Text(
                       "Metronome",
-                      style: GoogleFonts.inter(fontSize: 26),
+                      style: GoogleFonts.inter(fontSize: 24),
                     ),
                   ),
                   const SizedBox(width: 40),
