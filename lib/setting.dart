@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:gtuner/ad_helper.dart';
 import 'package:gtuner/consts.dart';
@@ -140,30 +141,30 @@ class _SettingScreenState extends State<SettingScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(4, 10, 0, 0),
+              padding: const EdgeInsets.fromLTRB(3, 15, 12, 15),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      widget.refresh();
                     },
                     icon: const Icon(
                       Icons.chevron_left,
-                      size: 32,
+                      size: 38,
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(4, 2, 0, 0),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 7),
                     child: Text(
                       "Settings",
-                      style: TextStyle(fontSize: 22),
+                      style: GoogleFonts.inter(fontSize: 26),
                     ),
                   ),
+                  const SizedBox(width: 55),
                 ],
               ),
             ),
-            const SizedBox(height: 15),
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 20),
               child: Row(
@@ -219,7 +220,6 @@ class _SettingScreenState extends State<SettingScreen> {
                 });
               },
             ),
-            const SizedBox(height: 15),
             SwitchListTile(
               value: darkMode,
               title: const Text("Dark Mode"),
@@ -266,7 +266,7 @@ class _SettingScreenState extends State<SettingScreen> {
         widget.refresh();
       },
       style: OutlinedButton.styleFrom(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         side: BorderSide(
             color: (value == index)
                 ? const Color(0xFF9B44FF)

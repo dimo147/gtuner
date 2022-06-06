@@ -26,7 +26,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   double frequency = 0.0;
-  String note = "F";
+  String note = "E";
   double perfect = 0.0;
   double position = 0.0;
   var rng = Random();
@@ -192,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(10, 12, 10, 0),
+              padding: const EdgeInsets.fromLTRB(12, 15, 12, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -262,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Center(
                 child: Text(
                   note,
-                  style: const TextStyle(
+                  style: GoogleFonts.lato(
                     fontSize: 65,
                   ),
                 ),
@@ -343,8 +343,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ]
                                   : darkMode
                                       ? [
-                                          const Color(0xFF2C2C2C),
                                           const Color(0xFF3A3A3A),
+                                          const Color(0xFF2C2C2C),
                                         ]
                                       : [
                                           const Color(0xFFEEEEEE),
@@ -356,9 +356,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             boxShadow: const [
                               BoxShadow(
                                 color: Color(0xFF000000),
-                                spreadRadius: 6,
-                                blurRadius: 35,
-                                offset: Offset(12, 18),
+                                spreadRadius: 3,
+                                blurRadius: 15,
+                                offset: Offset(5, 5),
                               ),
                             ],
                           ),

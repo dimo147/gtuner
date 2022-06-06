@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:gtuner/consts.dart';
 import 'dart:async';
@@ -43,11 +44,11 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
 
   playSound() async {
     if (notes % 2 == 1 && current == 1) {
-      await player3.play("metronome.wav", mode: PlayerMode.LOW_LATENCY);
+      await player3.play("metronome.flac", mode: PlayerMode.LOW_LATENCY);
     } else if (current % 2 == 0) {
-      await player.play("metronome.wav", mode: PlayerMode.LOW_LATENCY);
+      await player.play("metronome.flac", mode: PlayerMode.LOW_LATENCY);
     } else {
-      await player2.play("metronome.wav", mode: PlayerMode.LOW_LATENCY);
+      await player2.play("metronome.flac", mode: PlayerMode.LOW_LATENCY);
     }
     setState(() {
       if (current == notes) {
@@ -72,32 +73,6 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
     super.dispose();
   }
 
-  Future<void> _showMyDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Tuning Calibration'),
-          content: const RythmPicker(),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Done'),
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(
-                    darkMode ? Colors.white : Colors.black),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-                setState(() {});
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,7 +88,7 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(8, 10, 0, 0),
+              padding: const EdgeInsets.fromLTRB(3, 15, 12, 35),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -123,27 +98,24 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
                     },
                     icon: const Icon(
                       Icons.chevron_left,
-                      size: 32,
+                      size: 38,
                     ),
                   ),
-                  const Text(
-                    "Metronome",
-                    style: TextStyle(fontSize: 21),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 7),
+                    child: Text(
+                      "Metronome",
+                      style: GoogleFonts.inter(fontSize: 26),
+                    ),
                   ),
-                  Container(width: 50),
+                  const SizedBox(width: 55),
                 ],
               ),
             ),
-            const SizedBox(height: 30),
-            GestureDetector(
-              onTap: () {
-                _showMyDialog();
-              },
-              child: Center(
-                child: Text(
-                  notes.toString() + ' / ' + noteType.toString(),
-                  style: const TextStyle(fontSize: 30),
-                ),
+            Center(
+              child: Text(
+                notes.toString() + ' / ' + noteType.toString(),
+                style: const TextStyle(fontSize: 32),
               ),
             ),
             const SizedBox(height: 40),
@@ -154,18 +126,35 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
                 for (var i = 1; i <= notes; i++)
                   Container(
                     decoration: BoxDecoration(
-                      color: (current == i)
-                          ? Colors.deepPurple
-                          : Colors.grey.withOpacity(0.5),
                       shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                        colors: (current == i)
+                            ? const [
+                                Color(0xffBB49E3),
+                                Color(0xff5E007E),
+                              ]
+                            : const [
+                                Color(0xff6F6F6F),
+                                Color(0xff3C3C3C),
+                              ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.8),
+                          spreadRadius: 3,
+                          blurRadius: 17,
+                          offset: const Offset(2, 5),
+                        ),
+                      ],
                     ),
-                    width: (current == i) ? 20 : 15,
-                    height: (current == i) ? 20 : 15,
+                    width: (current == i) ? 32 : 27,
+                    height: (current == i) ? 32 : 27,
                   ),
               ],
             ),
-            const SizedBox(height: 40),
-            const Divider(color: Colors.white, thickness: 1),
+            const SizedBox(height: 20),
             const Spacer(),
             FractionallySizedBox(
               widthFactor: 0.82,
@@ -182,12 +171,12 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
                       });
                     },
                     icon: const Icon(Icons.remove),
-                    iconSize: 40,
-                    color: Colors.white.withOpacity(0.7),
+                    iconSize: 60,
+                    color: Colors.white.withOpacity(0.88),
                   ),
                   Text(
                     tempo.toString(),
-                    style: const TextStyle(fontSize: 60),
+                    style: const TextStyle(fontSize: 55),
                   ),
                   IconButton(
                     onPressed: () {
@@ -199,8 +188,8 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
                       });
                     },
                     icon: const Icon(Icons.add),
-                    iconSize: 40,
-                    color: Colors.white.withOpacity(0.7),
+                    iconSize: 60,
+                    color: Colors.white.withOpacity(0.88),
                   ),
                 ],
               ),
@@ -226,16 +215,20 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
                 width: 200,
                 height: 200,
                 decoration: BoxDecoration(
-                  gradient: const RadialGradient(colors: [
-                    Color.fromARGB(255, 194, 194, 194),
-                    Color.fromARGB(255, 117, 117, 117),
-                  ]),
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color(0xff000000),
+                      Color(0x00D9D9D9),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.8),
-                      spreadRadius: 5,
-                      blurRadius: 40,
-                      offset: const Offset(-5, 5),
+                      spreadRadius: 8,
+                      blurRadius: 25,
+                      offset: const Offset(10, 12),
                     ),
                   ],
                   color: Colors.grey,
@@ -247,16 +240,19 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                IconButton(
-                  onPressed: () {
-                    if (isPlaying) {
-                      stop();
-                    } else {
-                      start();
-                    }
-                  },
-                  icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow,
-                      size: 35),
+                Padding(
+                  padding: const EdgeInsets.only(right: 26, bottom: 10),
+                  child: IconButton(
+                    onPressed: () {
+                      if (isPlaying) {
+                        stop();
+                      } else {
+                        start();
+                      }
+                    },
+                    icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow,
+                        size: 52),
+                  ),
                 )
               ],
             ),
