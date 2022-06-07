@@ -1,6 +1,6 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:gtuner/consts.dart';
 import 'dart:async';
@@ -13,27 +13,11 @@ class MetronomeScreen extends StatefulWidget {
 }
 
 class _MetronomeScreenState extends State<MetronomeScreen> {
+  Timer? timer;
   int tempo = 75;
   int current = 1;
-  Timer? timer;
   bool isPlaying = false;
-  static AudioCache player = AudioCache(
-    prefix: "images/",
-    fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP),
-  );
-  static AudioCache player2 = AudioCache(
-    prefix: "images/",
-    fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP),
-  );
-  static AudioCache player3 = AudioCache(
-    prefix: "images/",
-    fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP),
-  );
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  final player = AudioPlayer();
 
   start() {
     timer = Timer.periodic(
@@ -43,13 +27,9 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
   }
 
   playSound() async {
-    if (notes % 2 == 1 && current == 1) {
-      await player3.play("metronome.flac", mode: PlayerMode.LOW_LATENCY);
-    } else if (current % 2 == 0) {
-      await player.play("metronome.flac", mode: PlayerMode.LOW_LATENCY);
-    } else {
-      await player2.play("metronome.flac", mode: PlayerMode.LOW_LATENCY);
-    }
+    await player.setAsset('images/metronome.flac');
+    await player.setVolume(100);
+    player.play();
     setState(() {
       if (current == notes) {
         current = 1;
