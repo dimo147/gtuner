@@ -2,7 +2,7 @@
 
 A Mobile Guitar Tuner.
 
-## Depencies
+## Dependencies
  - flutter_audio_capture
  - pitch_detector_dart
  - shared_preferences
