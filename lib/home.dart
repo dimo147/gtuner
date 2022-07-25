@@ -2,15 +2,16 @@ import 'package:flutter_audio_capture/flutter_audio_capture.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:show_up_animation/show_up_animation.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/pitch_handler.dart';
 import 'package:google_fonts/google_fonts.dart';
-import './ad_helper.dart';
 import 'package:flutter/material.dart';
 import './metronome.dart';
+import './ad_helper.dart';
+import 'dart:typed_data';
 import './setting.dart';
 import './consts.dart';
-import 'dart:typed_data';
 import 'dart:async';
 import 'dart:math';
 
@@ -23,18 +24,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  double frequency = 0.0;
-  String note = "F";
-  double perfect = 0.0;
-  double position = 0.0;
-  var rng = Random();
-  final _audioRecorder = FlutterAudioCapture();
   final pitchDetectorDart = PitchDetector(44100, 2000);
+  final _audioRecorder = FlutterAudioCapture();
   late PitchHandler pitchupDart;
+  double frequency = 0.0;
+  double position = 0.0;
+  double perfect = 0.0;
+  var rng = Random();
   String status = '';
+  String note = "F";
 
-  InterstitialAd? _interstitialAd;
   bool _isInterstitialAdReady = false;
+  InterstitialAd? _interstitialAd;
 
   @override
   void initState() {
@@ -188,221 +189,254 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 15, 12, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MetronomeScreen(),
-                        ),
-                      );
-                    },
-                    icon: Image.asset(
-                      "images/metronome.png",
-                      width: 100,
-                      height: 100,
-                      color: darkMode ? Colors.white : Colors.black,
-                    ),
-                  ),
-                  Text(
-                    "gTuner",
-                    style: GoogleFonts.inter(
-                        fontSize: 25, fontWeight: FontWeight.w500),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SettingScreen(
-                            refresh: refresh,
-                            refreshMain: widget.refresh,
+              child: ShowUpAnimation(
+                delayStart: const Duration(milliseconds: 300),
+                animationDuration: const Duration(seconds: 1),
+                direction: Direction.vertical,
+                curve: Curves.fastOutSlowIn,
+                offset: 0.5,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MetronomeScreen(),
                           ),
-                        ),
-                      );
-                    },
-                    icon: const Icon(Icons.settings),
-                  ),
-                ],
+                        );
+                      },
+                      icon: Image.asset(
+                        "images/metronome.png",
+                        width: 100,
+                        height: 100,
+                        color: darkMode ? Colors.white : Colors.black,
+                      ),
+                    ),
+                    Text(
+                      "gTuner",
+                      style: GoogleFonts.inter(
+                          fontSize: 25, fontWeight: FontWeight.w500),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SettingScreen(
+                              refresh: refresh,
+                              refreshMain: widget.refresh,
+                            ),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.settings),
+                    ),
+                  ],
+                ),
               ),
             ),
             const Spacer(),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  colors: darkMode
-                      ? const [
-                          Color(0xFF404040),
-                          Color(0xFF272727),
+            ShowUpAnimation(
+              delayStart: const Duration(milliseconds: 500),
+              animationDuration: const Duration(seconds: 1),
+              direction: Direction.vertical,
+              curve: Curves.fastOutSlowIn,
+              offset: 0.5,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    colors: darkMode
+                        ? const [
+                            Color(0xFF404040),
+                            Color(0xFF272727),
+                          ]
+                        : const [
+                            Color(0xFFFDFDFD),
+                            Color(0xFFC7C7C7),
+                          ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  boxShadow: darkMode
+                      ? [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.4),
+                            spreadRadius: 6,
+                            blurRadius: 35,
+                            offset: const Offset(12, 18),
+                          ),
                         ]
                       : const [
-                          Color(0xFFFDFDFD),
-                          Color(0xFFC7C7C7),
+                          BoxShadow(
+                            color: Color(0xffADADAD),
+                            spreadRadius: 5,
+                            blurRadius: 40,
+                            offset: Offset(12, 15),
+                          ),
                         ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
                 ),
-                boxShadow: darkMode
-                    ? [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.4),
-                          spreadRadius: 6,
-                          blurRadius: 35,
-                          offset: const Offset(12, 18),
-                        ),
-                      ]
-                    : const [
-                        BoxShadow(
-                          color: Color(0xffADADAD),
-                          spreadRadius: 5,
-                          blurRadius: 40,
-                          offset: Offset(12, 15),
-                        ),
-                      ],
-              ),
-              width: screenSize.width * 0.55,
-              height: screenSize.width * 0.55,
-              child: Center(
-                child: Text(
-                  note,
-                  style: GoogleFonts.lato(
-                    fontSize: 65,
-                  ),
-                ),
-              ),
-            ),
-            const Spacer(),
-            showPitch
-                ? Text(
-                    frequency.toStringAsFixed(2),
-                    style: const TextStyle(fontSize: 18),
-                  )
-                : Container(),
-            showPitch ? const Spacer() : Container(),
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 100,
-              child: Stack(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      for (var i = 0;
-                          i <= MediaQuery.of(context).size.width / 10;
-                          i++)
-                        Container(
-                          color: darkMode
-                              ? Colors.grey.withOpacity(0.5)
-                              : Colors.black.withOpacity(0.55),
-                          width: 2,
-                          height: 25 + rng.nextInt(93 - 25).toDouble(),
-                        ),
-                    ],
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width / 2 - 1),
-                    color: Colors.green.withOpacity(0.6),
-                    width: 2,
-                    height: 100,
-                  ),
-                  AnimatedPositioned(
-                    width: 2.5,
-                    height: 100,
-                    left:
-                        (MediaQuery.of(context).size.width / 2) + position * 9,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.fastOutSlowIn,
-                    child: Container(
-                      color: status == "waytoohigh" || status == "waytoolow"
-                          ? Colors.red
-                          : status == "toolow" || status == "toohigh"
-                              ? Colors.yellow
-                              : status == "tuned"
-                                  ? Colors.green
-                                  : Colors.grey,
+                width: screenSize.width * 0.55,
+                height: screenSize.width * 0.55,
+                child: Center(
+                  child: Text(
+                    note,
+                    style: GoogleFonts.lato(
+                      fontSize: 65,
                     ),
                   ),
-                ],
+                ),
               ),
             ),
             const Spacer(),
-            screenSize.height > 600
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      for (var i in tuninig.keys)
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                            gradient: LinearGradient(
-                              colors: (note.characters.first ==
+            if (showPitch)
+              ShowUpAnimation(
+                delayStart: const Duration(milliseconds: 700),
+                animationDuration: const Duration(seconds: 1),
+                direction: Direction.vertical,
+                curve: Curves.fastOutSlowIn,
+                offset: 0.5,
+                child: Text(
+                  frequency.toStringAsFixed(2),
+                  style: const TextStyle(fontSize: 18),
+                ),
+              ),
+            if (showPitch) const Spacer(),
+            ShowUpAnimation(
+              delayStart: const Duration(milliseconds: 700),
+              animationDuration: const Duration(seconds: 1),
+              direction: Direction.vertical,
+              curve: Curves.fastOutSlowIn,
+              offset: 0.5,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: 100,
+                child: Stack(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        for (var i = 0;
+                            i <= MediaQuery.of(context).size.width / 10;
+                            i++)
+                          Container(
+                            color: darkMode
+                                ? Colors.grey.withOpacity(0.5)
+                                : Colors.black.withOpacity(0.55),
+                            width: 2,
+                            height: 25 + rng.nextInt(93 - 25).toDouble(),
+                          ),
+                      ],
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width / 2 - 1),
+                      color: Colors.green.withOpacity(0.6),
+                      width: 2,
+                      height: 100,
+                    ),
+                    AnimatedPositioned(
+                      width: 2.5,
+                      height: 100,
+                      left: (MediaQuery.of(context).size.width / 2) +
+                          position * 9,
+                      duration: const Duration(milliseconds: 900),
+                      curve: Curves.fastOutSlowIn,
+                      child: Container(
+                        color: status == "waytoohigh" || status == "waytoolow"
+                            ? Colors.red
+                            : status == "toolow" || status == "toohigh"
+                                ? Colors.yellow
+                                : status == "tuned"
+                                    ? Colors.green
+                                    : Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const Spacer(),
+            if (screenSize.height > 600)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  for (var i in tuninig.keys)
+                    ShowUpAnimation(
+                      delayStart: const Duration(milliseconds: 900),
+                      animationDuration: const Duration(seconds: 1),
+                      direction: Direction.vertical,
+                      curve: Curves.fastOutSlowIn,
+                      offset: 0.5,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            colors: (note.characters.first ==
+                                        i.characters.first &&
+                                    inRange(
+                                        perfect.toInt(), tuninig[i]?.toInt()))
+                                ? [
+                                    const Color(0xFF851BFF),
+                                    const Color(0xFF851BFF),
+                                  ]
+                                : darkMode
+                                    ? [
+                                        const Color(0xFF3A3A3A),
+                                        const Color(0xFF2C2C2C),
+                                      ]
+                                    : [
+                                        const Color(0xFFEEEEEE),
+                                        const Color(0xFFe0e0e0),
+                                      ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          boxShadow: darkMode
+                              ? const [
+                                  BoxShadow(
+                                    color: Color(0xFF000000),
+                                    spreadRadius: 3,
+                                    blurRadius: 15,
+                                    offset: Offset(5, 5),
+                                  ),
+                                ]
+                              : const [
+                                  BoxShadow(
+                                    color: Color(0xffADADAD),
+                                    spreadRadius: 1,
+                                    blurRadius: 12,
+                                    offset: Offset(2, 3),
+                                  ),
+                                ],
+                        ),
+                        width: screenSize.width / 7,
+                        height: screenSize.width / 7,
+                        child: Center(
+                          child: Text(
+                            i.characters.first,
+                            style: GoogleFonts.inter(
+                              fontSize: 19,
+                              color: (note.characters.first ==
                                           i.characters.first &&
                                       inRange(
                                           perfect.toInt(), tuninig[i]?.toInt()))
-                                  ? [
-                                      const Color(0xFF851BFF),
-                                      const Color(0xFF851BFF),
-                                    ]
+                                  ? const Color(0xfff3f3f3)
                                   : darkMode
-                                      ? [
-                                          const Color(0xFF3A3A3A),
-                                          const Color(0xFF2C2C2C),
-                                        ]
-                                      : [
-                                          const Color(0xFFEEEEEE),
-                                          const Color(0xFFe0e0e0),
-                                        ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                            boxShadow: darkMode
-                                ? const [
-                                    BoxShadow(
-                                      color: Color(0xFF000000),
-                                      spreadRadius: 3,
-                                      blurRadius: 15,
-                                      offset: Offset(5, 5),
-                                    ),
-                                  ]
-                                : const [
-                                    BoxShadow(
-                                      color: Color(0xffADADAD),
-                                      spreadRadius: 1,
-                                      blurRadius: 12,
-                                      offset: Offset(2, 3),
-                                    ),
-                                  ],
-                          ),
-                          width: screenSize.width / 7,
-                          height: screenSize.width / 7,
-                          child: Center(
-                            child: Text(
-                              i.characters.first,
-                              style: GoogleFonts.inter(
-                                fontSize: 19,
-                                color: (note.characters.first ==
-                                            i.characters.first &&
-                                        inRange(perfect.toInt(),
-                                            tuninig[i]?.toInt()))
-                                    ? const Color(0xfff3f3f3)
-                                    : darkMode
-                                        ? const Color(0xfff3f3f3)
-                                        : Colors.black,
-                              ),
+                                      ? const Color(0xfff3f3f3)
+                                      : Colors.black,
                             ),
                           ),
                         ),
-                    ],
-                  )
-                : Container(),
+                      ),
+                    ),
+                ],
+              ),
             const SizedBox(height: 25),
             const Spacer(),
           ],
