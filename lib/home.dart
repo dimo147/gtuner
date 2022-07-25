@@ -5,18 +5,18 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/pitch_handler.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:gtuner/ad_helper.dart';
+import './ad_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:gtuner/metronome.dart';
-import 'package:gtuner/setting.dart';
-import 'package:gtuner/consts.dart';
+import './metronome.dart';
+import './setting.dart';
+import './consts.dart';
 import 'dart:typed_data';
 import 'dart:async';
 import 'dart:math';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key, required this.refresh}) : super(key: key);
-  VoidCallback refresh;
+  const HomeScreen({Key? key, required this.refresh}) : super(key: key);
+  final VoidCallback refresh;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();

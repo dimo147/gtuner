@@ -2,7 +2,7 @@ import 'package:numberpicker/numberpicker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:flutter/material.dart';
-import 'package:gtuner/consts.dart';
+import './consts.dart';
 import 'dart:async';
 
 class MetronomeScreen extends StatefulWidget {
@@ -94,7 +94,7 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
             ),
             Center(
               child: Text(
-                notes.toString() + ' / ' + noteType.toString(),
+                '$notes / $noteType',
                 style: const TextStyle(fontSize: 32),
               ),
             ),
@@ -275,7 +275,7 @@ class RythmPicker extends StatefulWidget {
   const RythmPicker({Key? key}) : super(key: key);
 
   @override
-  _RythmPickerState createState() => _RythmPickerState();
+  State<RythmPicker> createState() => _RythmPickerState();
 }
 
 class _RythmPickerState extends State<RythmPicker> {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gtuner/consts.dart';
-import 'package:gtuner/home.dart';
+import './consts.dart';
+import './home.dart';
 
 void main() {
   Paint.enableDithering = true;

@@ -3,15 +3,15 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:gtuner/ad_helper.dart';
-import 'package:gtuner/consts.dart';
-import 'package:gtuner/main.dart';
+import './ad_helper.dart';
+import './consts.dart';
 
 class SettingScreen extends StatefulWidget {
-  SettingScreen({Key? key, required this.refresh, required this.refreshMain})
+  const SettingScreen(
+      {Key? key, required this.refresh, required this.refreshMain})
       : super(key: key);
-  VoidCallback refresh;
-  VoidCallback refreshMain;
+  final VoidCallback refresh;
+  final VoidCallback refreshMain;
 
   @override
   State<SettingScreen> createState() => _SettingScreenState();
@@ -32,7 +32,6 @@ class _SettingScreenState extends State<SettingScreen> {
           content: const IntegerPicker(),
           actions: <Widget>[
             TextButton(
-              child: const Text('Done'),
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(
                     darkMode ? Colors.white : Colors.black),
@@ -41,6 +40,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 Navigator.of(context).pop();
                 setCalib();
               },
+              child: const Text('Done'),
             ),
           ],
         );
@@ -178,9 +178,9 @@ class _SettingScreenState extends State<SettingScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                CustomRadioButton("Guitar", 1, 'images/spanish-guitar.png'),
-                CustomRadioButton("Ukulele", 2, "images/ukelele.png"),
-                CustomRadioButton("Bass", 3, "images/bass.png")
+                customRadioButton("Guitar", 1, 'images/spanish-guitar.png'),
+                customRadioButton("Ukulele", 2, "images/ukelele.png"),
+                customRadioButton("Bass", 3, "images/bass.png")
               ],
             ),
             const SizedBox(height: 25),
@@ -201,11 +201,11 @@ class _SettingScreenState extends State<SettingScreen> {
                 _showMyDialog();
               },
               trailing: Opacity(
+                opacity: 0.6,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 5),
-                  child: Text(calibration.toInt().toString() + " Hz"),
+                  child: Text("${calibration.toInt()} Hz"),
                 ),
-                opacity: 0.6,
               ),
             ),
             SwitchListTile(
@@ -254,7 +254,7 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
-  Widget CustomRadioButton(String text, int index, String image) {
+  Widget customRadioButton(String text, int index, String image) {
     double screenWidth = MediaQuery.of(context).size.width;
     return OutlinedButton(
       onPressed: () {
@@ -305,7 +305,7 @@ class IntegerPicker extends StatefulWidget {
   const IntegerPicker({Key? key}) : super(key: key);
 
   @override
-  _IntegerPickerState createState() => _IntegerPickerState();
+  State<IntegerPicker> createState() => _IntegerPickerState();
 }
 
 class _IntegerPickerState extends State<IntegerPicker> {

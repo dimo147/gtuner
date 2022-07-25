@@ -1,11 +1,12 @@
 name: gtuner
-description: Mobile guitar Tuner.
+description: Mobile Guitar Tuner.
 
 publish_to: 'none'
-version: 1.6.3
+
+version: 1.0.0
 
 environment:
-  sdk: ">=2.15.1 <3.0.0"
+  sdk: ">=2.17.6 <3.0.0"
 
 dependencies:
   flutter:
@@ -16,7 +17,7 @@ dependencies:
   flutter_audio_capture: ^1.1.0
   pitch_detector_dart: ^0.0.2
   shared_preferences: ^2.0.11
-  google_mobile_ads: ^0.13.0
+  google_mobile_ads: ^1.3.0
   permission_handler: ^8.3.0
   numberpicker: ^2.1.1
   google_fonts: ^3.0.1
@@ -26,10 +27,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.0
 
 flutter:
-  generate: true
   uses-material-design: true
   assets:
     - images/
