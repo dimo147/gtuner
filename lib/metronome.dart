@@ -27,7 +27,7 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
   }
 
   playSound() async {
-    await player.setAsset('images/metronome.flac');
+    await player.setAsset('images/metronome_sound.wav');
     await player.setVolume(100);
     player.play();
     setState(() {

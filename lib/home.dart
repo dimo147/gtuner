@@ -6,6 +6,7 @@ import 'package:show_up_animation/show_up_animation.dart';
 import 'package:pitch_detector_dart/pitch_detector.dart';
 import 'package:pitchupdart/pitch_handler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import './metronome.dart';
 import './ad_helper.dart';
@@ -40,6 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     getData();
     pitchupDart = PitchHandler(
       calibration,
@@ -188,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(12, 15, 12, 0),
+              padding: const EdgeInsets.fromLTRB(12, 10, 12, 0),
               child: ShowUpAnimation(
                 delayStart: const Duration(milliseconds: 300),
                 animationDuration: const Duration(seconds: 1),
@@ -209,8 +213,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       icon: Image.asset(
                         "images/metronome.png",
-                        width: 100,
-                        height: 100,
+                        width: 35,
+                        height: 35,
                         color: darkMode ? Colors.white : Colors.black,
                       ),
                     ),
