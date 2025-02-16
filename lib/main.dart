@@ -3,7 +3,7 @@ import './consts.dart';
 import './home.dart';
 
 void main() {
-  Paint.enableDithering = true;
+  // Paint.enableDithering = true;
   runApp(const MyApp());
 }
 

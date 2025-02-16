@@ -26,3 +26,7 @@ flutter pub get
 ```bash
 flutter run
 ```
+
+<img src="https://github.com/dimo147/gtuner/blob/main/images/mobile/main.png" width=30% height=30%>
+<img src="https://github.com/dimo147/gtuner/blob/main/images/mobile/metronome.png" width=30% height=30%>
+<img src="https://github.com/dimo147/gtuner/blob/main/images/mobile/setting.png" width=30% height=30%>
