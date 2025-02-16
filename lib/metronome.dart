@@ -145,12 +145,31 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
             ),
             const SizedBox(height: 20),
             const Spacer(),
-            FractionallySizedBox(
-              widthFactor: 0.82,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
+            Text(
+              tempo.toString(),
+              style: const TextStyle(fontSize: 55),
+            ),
+            const Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 100,
+                  height: 100,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                      Colors.black45,
+                      Colors.black54,
+                    ], stops: [
+                      0,
+                      1
+                    ]),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      bottomLeft: Radius.circular(15),
+                    ),
+                  ),
+                  child: IconButton(
                     onPressed: () {
                       stop();
                       setState(() {
@@ -160,16 +179,49 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
                       });
                     },
                     icon: const Icon(Icons.remove),
-                    iconSize: 60,
+                    iconSize: 55,
                     color: darkMode
                         ? Colors.white.withOpacity(0.88)
                         : Colors.black.withOpacity(0.78),
                   ),
-                  Text(
-                    tempo.toString(),
-                    style: const TextStyle(fontSize: 55),
+                ),
+                Container(
+                  width: 100,
+                  height: 100,
+                  decoration: const BoxDecoration(
+                    color: Colors.black54,
                   ),
-                  IconButton(
+                  child: IconButton(
+                    onPressed: () {
+                      if (isPlaying) {
+                        stop();
+                      } else {
+                        start();
+                      }
+                    },
+                    icon: Icon(
+                      isPlaying ? Icons.pause : Icons.play_arrow,
+                      size: 52,
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 100,
+                  height: 100,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                      Colors.black54,
+                      Colors.black45,
+                    ], stops: [
+                      0,
+                      1
+                    ]),
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
+                    ),
+                  ),
+                  child: IconButton(
                     onPressed: () {
                       stop();
                       setState(() {
@@ -179,91 +231,15 @@ class _MetronomeScreenState extends State<MetronomeScreen> {
                       });
                     },
                     icon: const Icon(Icons.add),
-                    iconSize: 60,
+                    iconSize: 55,
                     color: darkMode
                         ? Colors.white.withOpacity(0.88)
                         : Colors.black.withOpacity(0.78),
                   ),
-                ],
-              ),
-            ),
-            const Spacer(),
-            GestureDetector(
-              onVerticalDragUpdate: (details) {
-                if (details.delta.dy < 0) {
-                  setState(() {
-                    if (tempo < 180) {
-                      tempo += 1;
-                    }
-                  });
-                } else if (details.delta.dy > 0) {
-                  setState(() {
-                    if (tempo > 35) {
-                      tempo -= 1;
-                    }
-                  });
-                }
-              },
-              child: Container(
-                width: 200,
-                height: 200,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: darkMode
-                        ? [
-                            const Color(0xff000000),
-                            const Color(0x00D9D9D9),
-                          ]
-                        : [
-                            const Color(0xffffffff),
-                            const Color(0xffB2B2B2),
-                          ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  boxShadow: darkMode
-                      ? [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.8),
-                            spreadRadius: 8,
-                            blurRadius: 25,
-                            offset: const Offset(10, 12),
-                          ),
-                        ]
-                      : [
-                          const BoxShadow(
-                            color: Color(0xffA6A6A6),
-                            spreadRadius: 8,
-                            blurRadius: 33,
-                            offset: Offset(10, 12),
-                          ),
-                        ],
-                  color: Colors.grey,
-                  shape: BoxShape.circle,
                 ),
-              ),
-            ),
-            const Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 26, bottom: 10),
-                  child: IconButton(
-                    onPressed: () {
-                      if (isPlaying) {
-                        stop();
-                      } else {
-                        start();
-                      }
-                    },
-                    icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow,
-                        size: 52),
-                  ),
-                )
               ],
             ),
-            const Spacer(),
+            const Spacer(flex: 2),
           ],
         ),
       ),

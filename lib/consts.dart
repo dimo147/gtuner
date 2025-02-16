@@ -51,14 +51,14 @@ int noteType = 4;
 // Main
 
 ThemeData darkTheme = ThemeData(
-  accentColor: Colors.purpleAccent,
+  // accentColor: Colors.purpleAccent,
   brightness: Brightness.dark,
   primaryColor: Colors.purpleAccent,
   useMaterial3: true,
 );
 
 ThemeData lightTheme = ThemeData(
-  accentColor: Colors.purpleAccent,
+  // accentColor: Colors.purpleAccent,
   brightness: Brightness.light,
   primaryColor: Colors.purpleAccent,
   useMaterial3: true,
